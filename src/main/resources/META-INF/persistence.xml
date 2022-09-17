@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="CadastroPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.ic.projects.laudoecia.model.cadastro.ProcDaTabela</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.ValorFixo</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.ValorNoConvenio</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.VideoGravado</class>
+    <class>com.ic.projects.laudoecia.model.tiss.TISS_Conselho</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.Imagem</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.TabelaDeProcedimentos</class>
+    <class>com.ic.projects.laudoecia.model.basededados.UF</class>
+    <class>com.ic.projects.laudoecia.model.auditable.GrupoDeUsuarios</class>
+    <class>com.ic.projects.laudoecia.model.auditable.Atendimento</class>
+    <class>com.ic.projects.laudoecia.model.auditable.Convenio</class>
+    <class>com.ic.projects.laudoecia.model.auditable.Paciente</class>
+    <class>com.ic.projects.laudoecia.model.auditable.Usuario</class>
+    <class>com.ic.projects.laudoecia.model.auditable.ProcMedico</class>
+    <class>com.ic.projects.laudoecia.model.auditable.GrupoProcedimento</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.AcaoDoUsuario</class>
+    <class>com.ic.projects.laudoecia.model.auditable.ProfExecutante</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.AltDeRegistro</class>
+    <class>com.ic.projects.laudoecia.model.auditable.ParametrosDoSistema</class>
+    <class>com.ic.projects.laudoecia.model.auditable.Licenciado</class>
+    <class>com.ic.projects.laudoecia.model.auditable.EstacaoDeTrabalho</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.Backup</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.BackupAutomatico</class>
+    <class>com.ic.projects.laudoecia.model.auditable.ProfSolicitante</class>
+    <class>com.ic.projects.laudoecia.model.laudo.Laudo</class>
+    <class>com.ic.projects.laudoecia.model.laudo.ParametroDoLaudo</class>
+    <class>com.ic.projects.laudoecia.model.laudo.ModeloDeLaudo</class>
+    <class>com.ic.projects.laudoecia.model.laudo.ModeloDeLaudoDoProc</class>
+    <class>com.ic.projects.laudoecia.model.auditable.TextoPadrao</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CBHPM</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CNES</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CapituloCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CategoriaCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.Crm</class>
+    <class>com.ic.projects.laudoecia.model.basededados.EnderecoPorCep</class>
+    <class>com.ic.projects.laudoecia.model.basededados.EspecialidadeMedica</class>
+    <class>com.ic.projects.laudoecia.model.basededados.GrupoCBHPM</class>
+    <class>com.ic.projects.laudoecia.model.basededados.GrupoCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.SubcategoriaCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.SubgrupoCBHPM</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.ParametrosDaCaptura</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.PropriedadeDaCaptura</class>
+    <class>com.ic.projects.laudoecia.model.auditable.ProcDoAtd</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.ImagemImpressa</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.PaginaDeImagens</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.Abreviatura</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.Recorte</class>
+    <class>com.ic.projects.laudoecia.model.cadastro.ImagemRestore</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
+      <property name="eclipselink.weaving" value="static"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="BaseDeDadosPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.ic.projects.laudoecia.model.basededados.CategoriaCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CapituloCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.Crm</class>
+    <class>com.ic.projects.laudoecia.model.basededados.SubcategoriaCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.EspecialidadeMedica</class>
+    <class>com.ic.projects.laudoecia.model.basededados.GrupoCID10</class>
+    <class>com.ic.projects.laudoecia.model.basededados.EnderecoPorCep</class>
+    <class>com.ic.projects.laudoecia.model.tiss.TISS_Conselho</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CBHPM</class>
+    <class>com.ic.projects.laudoecia.model.basededados.GrupoCBHPM</class>
+    <class>com.ic.projects.laudoecia.model.basededados.SubgrupoCBHPM</class>
+    <class>com.ic.projects.laudoecia.model.basededados.CNES</class>
+    <class>com.ic.projects.laudoecia.model.basededados.UF</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="eclipselink.weaving" value="static"/>
+    </properties>
+  </persistence-unit>
+</persistence>
