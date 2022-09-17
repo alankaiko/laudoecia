@@ -67,5 +67,7 @@ public interface ImagensLC
     final String TOPO_RELATORIOS = "TOPO_RELATORIOS.jpg";
     final String TV_CAPTURA = "TV_CAPTURA.png";
     final String ULTIMO_GRANDE = "ULTIMO_GRANDE.png";
+    final String ENVIOEMAIL = "email.png";
+    final String ENVIOWHATS = "whats.png";
 
 }

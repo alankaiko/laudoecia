@@ -1,163 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>br.com.luvva.laudoecia</groupId>
-    <artifactId>laudoecia</artifactId>
-    <version>1.9.9.1</version>
+	<groupId>br.com.luvva.laudoecia</groupId>
+	<artifactId>laudoecia</artifactId>
+	<version>1.9.9.1</version>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
-    <dependencies>
+	<dependencies>		
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
 
-        <dependency>
-            <groupId>br.com.luvva</groupId>
-            <artifactId>companyLibrary</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+		<dependency>
+			<groupId>br.com.luvva</groupId>
+			<artifactId>companyLibrary</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.52</version>
-        </dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.52</version>
+		</dependency>
 
-        <dependency>
-            <groupId>br.com.luvva.spellcheck</groupId>
-            <artifactId>spellcheck</artifactId>
-            <version>1.0</version>
-        </dependency>
+		<dependency>
+			<groupId>br.com.luvva.spellcheck</groupId>
+			<artifactId>spellcheck</artifactId>
+			<version>1.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>javax.media</groupId>
-            <artifactId>jmf</artifactId>
-            <version>2.1.1e</version>
-        </dependency>
+		<dependency>
+			<groupId>javax.media</groupId>
+			<artifactId>jmf</artifactId>
+			<version>2.1.1e</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.swinglabs</groupId>
-            <artifactId>pdf-renderer</artifactId>
-            <version>1.0.5</version>
-        </dependency>
+		<dependency>
+			<groupId>org.swinglabs</groupId>
+			<artifactId>pdf-renderer</artifactId>
+			<version>1.0.5</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.jhlabs</groupId>
-            <artifactId>filters</artifactId>
-            <version>2.0.235-1</version>
-        </dependency>
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>filters</artifactId>
+			<version>2.0.235-1</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-        </dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
 
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.3-603.jdbc3</version>
-        </dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.3-603.jdbc3</version>
+		</dependency>
 
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>5.6.0</version>
-        </dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.6.0</version>
+		</dependency>
 
-    </dependencies>
+	</dependencies>
 
-    <build>
+	<build>
 
-        <plugins>
+		<plugins>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <copy todir="${project.build.directory}/dist">
-                                    <fileset dir="${basedir}/resources/dist"/>
-                                </copy>
-                                <copy todir="${project.build.directory}/dist/lib">
-                                    <fileset dir="${basedir}/resources/lib"/>
-                                </copy>
-                                <copy todir="${project.build.directory}/classes">
-                                    <fileset dir="${basedir}/resources/dist"/>
-                                </copy>
-                                <unzip src="${project.build.directory}/${project.build.finalName}.jar"
-                                       dest="${project.build.directory}/tmp"/>
-                                <copy todir="${project.build.directory}/tmp/META-INF"
-                                      file="${basedir}/resources/manifest/MANIFEST.MF" overwrite="true"/>
-                                <jar basedir="${project.build.directory}/tmp"
-                                     destfile="${project.build.directory}/dist/LaudoeCia.jar"
-                                     excludes="${project.build.directory}/tmp/META-INF/MANIFEST.MF"
-                                     manifest="${project.build.directory}/tmp/META-INF/MANIFEST.MF">
-                                </jar>
-                                <copy tofile="${project.build.directory}/tmp/META-INF/MANIFEST.MF"
-                                      file="${basedir}/resources/manifest/MANIFEST-no-splash.MF" overwrite="true"/>
-                                <jar basedir="${project.build.directory}/tmp"
-                                     destfile="${project.build.directory}/dist/LaudoeCia-sem splash.jar"
-                                     excludes="${project.build.directory}/tmp/META-INF/MANIFEST.MF"
-                                     manifest="${project.build.directory}/tmp/META-INF/MANIFEST.MF">
-                                </jar>
-                                <copy file="${project.build.directory}/dist/LaudoeCia.jar"
-                                      todir="${project.build.directory}/../dist"/>
-                                <copy file="${project.build.directory}/dist/LaudoeCia-sem splash.jar"
-                                      tofile="${project.build.directory}/../dist/LaudoeCia-sem-splash.jar"/>
-                                <delete dir="${project.build.directory}/tmp"/>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>de.empulse.eclipselink</groupId>
-                <artifactId>staticweave-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>weave</goal>
-                        </goals>
-                        <configuration>
-                            <persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
-                            <logLevel>FINE</logLevel>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.eclipse.persistence</groupId>
-                        <artifactId>org.eclipse.persistence.jpa</artifactId>
-                        <version>2.4.2</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<copy todir="${project.build.directory}/dist">
+									<fileset dir="${basedir}/resources/dist" />
+								</copy>
+								<copy todir="${project.build.directory}/dist/lib">
+									<fileset dir="${basedir}/resources/lib" />
+								</copy>
+								<copy todir="${project.build.directory}/classes">
+									<fileset dir="${basedir}/resources/dist" />
+								</copy>
+								<unzip
+									src="${project.build.directory}/${project.build.finalName}.jar"
+									dest="${project.build.directory}/tmp" />
+								<copy todir="${project.build.directory}/tmp/META-INF" file="${basedir}/resources/manifest/MANIFEST.MF"
+									overwrite="true" />
+								<jar basedir="${project.build.directory}/tmp" destfile="${project.build.directory}/dist/LaudoeCia.jar"
+									excludes="${project.build.directory}/tmp/META-INF/MANIFEST.MF"
+									manifest="${project.build.directory}/tmp/META-INF/MANIFEST.MF">
+								</jar>
+								<copy tofile="${project.build.directory}/tmp/META-INF/MANIFEST.MF"
+									file="${basedir}/resources/manifest/MANIFEST-no-splash.MF"
+									overwrite="true" />
+								<jar basedir="${project.build.directory}/tmp"
+									destfile="${project.build.directory}/dist/LaudoeCia-sem splash.jar"
+									excludes="${project.build.directory}/tmp/META-INF/MANIFEST.MF"
+									manifest="${project.build.directory}/tmp/META-INF/MANIFEST.MF">
+								</jar>
+								<copy file="${project.build.directory}/dist/LaudoeCia.jar"
+									todir="${project.build.directory}/../dist" />
+								<copy file="${project.build.directory}/dist/LaudoeCia-sem splash.jar"
+									tofile="${project.build.directory}/../dist/LaudoeCia-sem-splash.jar" />
+								<delete dir="${project.build.directory}/tmp" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>de.empulse.eclipselink</groupId>
+				<artifactId>staticweave-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>weave</goal>
+						</goals>
+						<configuration>
+							<persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
+							<logLevel>FINE</logLevel>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.persistence</groupId>
+						<artifactId>org.eclipse.persistence.jpa</artifactId>
+						<version>2.4.2</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 
-        </plugins>
+		</plugins>
 
-    </build>
+	</build>
 
 </project>

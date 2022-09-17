@@ -7,7 +7,16 @@
 package com.ic.projects.laudoecia.model.cadastro;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
@@ -15,92 +24,89 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "imagemimpressa")
-public class ImagemImpressa implements Serializable
-{
+public class ImagemImpressa implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo")
-    private int codigo;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo")
+	private int codigo;
 
-    @JoinColumn(name = "imagem_codigo", referencedColumnName = "codigo", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Imagem imagem;
+	@JoinColumn(name = "imagem_codigo", referencedColumnName = "codigo", nullable = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	private Imagem imagem;
 
-    @Column(name = "indice")
-    private int indice;
+	@Column(name = "indice")
+	private int indice;
 
-    @JoinColumn(name = "pagina_codigo", referencedColumnName = "codigo")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private PaginaDeImagens pagina;
+	@JoinColumn(name = "pagina_codigo", referencedColumnName = "codigo")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private PaginaDeImagens pagina;
 
-    public int getCodigo ()
-    {
-        return codigo;
-    }
+	@Column
+	private String caminhoimagemjpeg;
 
-    public void setCodigo (int codigo)
-    {
-        this.codigo = codigo;
-    }
+	public int getCodigo() {
+		return codigo;
+	}
 
-    public Imagem getImagem ()
-    {
-        return imagem;
-    }
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setImagem (Imagem imagem)
-    {
-        this.imagem = imagem;
-    }
+	public Imagem getImagem() {
+		return imagem;
+	}
 
-    public int getIndice ()
-    {
-        return indice;
-    }
+	public void setImagem(Imagem imagem) {
+		this.imagem = imagem;
+	}
 
-    public void setIndice (int indice)
-    {
-        this.indice = indice;
-    }
+	public int getIndice() {
+		return indice;
+	}
 
-    public PaginaDeImagens getPagina ()
-    {
-        return pagina;
-    }
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
 
-    public void setPagina (PaginaDeImagens pagina)
-    {
-        this.pagina = pagina;
-    }
+	public PaginaDeImagens getPagina() {
+		return pagina;
+	}
 
-    @Override
-    public boolean equals (Object obj)
-    {
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final ImagemImpressa other = (ImagemImpressa) obj;
-        if (this.codigo != other.getCodigo())
-        {
-            return false;
-        }
-        return true;
-    }
+	public void setPagina(PaginaDeImagens pagina) {
+		this.pagina = pagina;
+	}
 
-    @Override
-    public int hashCode ()
-    {
-        int hash = 7;
-        hash = 97 * hash + this.codigo;
-        return hash;
-    }
+	public String getCaminhoimagemjpeg() {
+		return caminhoimagemjpeg;
+	}
+	
+	public void setCaminhoimagemjpeg(String caminhoimagemjpeg) {
+		this.caminhoimagemjpeg = caminhoimagemjpeg;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ImagemImpressa other = (ImagemImpressa) obj;
+		if (this.codigo != other.getCodigo()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 97 * hash + this.codigo;
+		return hash;
+	}
 
 }

@@ -20,6 +20,7 @@ import com.ic.projects.laudoecia.view.cadastro.IFrameAtendimentos;
 import com.ic.projects.laudoecia.view.cadastro.IFrameAuditoria;
 import com.ic.projects.laudoecia.view.cadastro.IFrameBackup;
 import com.ic.projects.laudoecia.view.cadastro.IFrameConvenios;
+import com.ic.projects.laudoecia.view.cadastro.IFrameEmailParametros;
 import com.ic.projects.laudoecia.view.cadastro.IFrameEstacoesDeTrabalho;
 import com.ic.projects.laudoecia.view.cadastro.IFrameGrupoDeProcedimentos;
 import com.ic.projects.laudoecia.view.cadastro.IFrameGrupoDeUsuarios;
@@ -138,6 +139,8 @@ public abstract class ViewFactory
                 return IFrameParametrosDoSistema.class;
             case TelaPrincipal.DADOS_DO_LICENCIADO:
                 return IFrameLicenciado.class;
+            case TelaPrincipal.PARAMETROS_EMAIL:
+                return IFrameEmailParametros.class;
             case TelaPrincipal.RELATORIOS_TODOS:
                 return IFrameTodosRelatorios.class;
             case TelaPrincipal.BACKUP_INSTANTANEO:

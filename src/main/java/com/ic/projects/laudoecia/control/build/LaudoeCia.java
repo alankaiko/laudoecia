@@ -49,15 +49,15 @@ import com.lib.java.utils.SystemUtils;
 public class LaudoeCia {
 
 	public static final String NOME_DO_SISTEMA = "LaudoeCia";
-	public static final VERSAO_DO_SW VERSAO_DO_SISTEMA_ENUM = VERSAO_DO_SW.V1_9_9_1;
+	public static final VERSAO_DO_SW VERSAO_DO_SISTEMA_ENUM = VERSAO_DO_SW.V1_9_9_4;
 	public static final String VERSAO_DO_SISTEMA = VERSAO_DO_SISTEMA_ENUM.getTipo();
 	public static final String TELEFONE = "(62) 3643-6264";
-	public static final String EMAIL = "vendas@novaopcaomed.com.br";
+	public static final String EMAIL = "contato@semprimed.com.br";
 	public static final String SIST_OPER_DO_SISTEMA = "Windows XP ou Superior";
-	public static final String COPYRIGHT_DO_SISTEMA = "Copyright © 2012";
-	public static final String PAGINA_OFICIAL_DO_SISTEMA = "www.novaopcaomed.com.br";
+	public static final String COPYRIGHT_DO_SISTEMA = "Copyright © 2021";
+	public static final String PAGINA_OFICIAL_DO_SISTEMA = "semprimed.com.br";
 	public static final String RESOLUCAO_RECOMENDADA = "1024 x 768";
-	public static final String DATA_VERSAO_DO_SISTEMA = "12/06/2017";
+	public static final String DATA_VERSAO_DO_SISTEMA = "25/08/2021";
 	private static String serial = "";
 	private static TelaPrincipal telaPrincipal = new TelaPrincipalNull();
 	private static SoftwareView softwareView;

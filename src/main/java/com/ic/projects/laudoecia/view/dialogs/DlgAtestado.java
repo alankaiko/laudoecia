@@ -304,7 +304,7 @@ public class DlgAtestado extends MyJDialog
         {
             LaudosHTMLUtils.setPagination(false);
             String html = "";
-            LaudosHTMLUtils.setProcDoAtd(null);
+            LaudosHTMLUtils.setProcDoAtd(null, false);
             if (chkPaciente.isSelected())
             {
                 html += LaudosHTMLUtils.createTabelaPagina(

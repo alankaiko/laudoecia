@@ -688,6 +688,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	@Override
 	public void imprimirApenasLaudo(String htmlDoLaudo, ProcDoAtd procDoAtd) {
 		printer.setProcDoAtd(procDoAtd);
+		printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 		String htmlComAdicionais = addAtdInfoEAssProf(htmlDoLaudo, procDoAtd);
 		int numPages = printer.getNumPages(htmlComAdicionais);
 		if (numPages == 1) {
@@ -701,6 +702,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	public void imprimirLaudoEImg(String htmlDoLaudo, ProcDoAtd procDoAtd) {
 		if (escolheuImagensParaImpressao()) {
 			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 			printer.print(gerarHtmlImpressaoLaudoEImg(htmlDoLaudo, procDoAtd),
 					StaticInfo.getParametrosDoSistema().getDefprinterimagens(), 1);
 		}
@@ -712,6 +714,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 			mediador.imprimirLaudoEImagens();
 		} else if (escolheuImagensParaImpressao()) {
 			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 			printer.print(pnlEscolherImagens.gerarHtmlParaImpressao(true, procDoAtd),
 					StaticInfo.getParametrosDoSistema().getDefprinterimagens(), 1);
 		}
@@ -720,11 +723,11 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	@Override
 	public void previewApenasImagens(ProcDoAtd procDoAtd) {
 		if (pnlEscolherImagens.temLayoutLaudoEImagens() != null) {
-			mostrarMsgErro("Não é possível imprimir apenas imagens com o layout \n["
-					+ LAYOUT_IMG.LAYOUT_LAUDO_E_4_IMG.getLayout() + "].\n" + "Escolha outro layout para impressão.");
+			mostrarMsgErro("Não é possível imprimir apenas imagens com o layout \n["+ LAYOUT_IMG.LAYOUT_LAUDO_E_4_IMG.getLayout() + "].\n" + "Escolha outro layout para impressão.");
 			mediador.escolherImgParaImp();
 		} else if (escolheuImagensParaImpressao()) {
 			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 			printer.preview(pnlEscolherImagens.gerarHtmlParaImpressao(true, procDoAtd), actionImprimirSoImg);
 		}
 	}
@@ -732,6 +735,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	@Override
 	public void previewApenasLaudo(String htmlDoLaudo, ProcDoAtd procDoAtd) {
 		printer.setProcDoAtd(procDoAtd);
+		printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 		String htmlComAdicionais = addAtdInfoEAssProf(htmlDoLaudo, procDoAtd);
 		int numPages = printer.getNumPages(htmlComAdicionais);
 		if (numPages == 1) {
@@ -744,6 +748,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	public void previewLaudoEImg(String htmlDoLaudo, ProcDoAtd procDoAtd) {
 		if (escolheuImagensParaImpressao()) {
 			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 			printer.preview(gerarHtmlImpressaoLaudoEImg(htmlDoLaudo, procDoAtd), actionImprimirLaudoEImg);
 		}
 	}
@@ -764,6 +769,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 			mediador.gerarPDFLaudoEImagens();
 		} else if (escolheuImagensParaImpressao()) {
 			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 			printer.gerarPDF(pnlEscolherImagens.gerarHtmlParaImpressao(true, procDoAtd));
 		}
 	}
@@ -771,6 +777,7 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	@Override
 	public void gerarPDFApenasLaudo(String htmlDoLaudo, ProcDoAtd procDoAtd) {
 		printer.setProcDoAtd(procDoAtd);
+		printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 		String htmlComAdicionais = addAtdInfoEAssProf(htmlDoLaudo, procDoAtd);
 		int numPages = printer.getNumPages(htmlComAdicionais);
 		if (numPages == 1) {
@@ -783,10 +790,45 @@ public class PnlLaudoeCia extends MyJPanel implements ViewLaudoeCia, PnlFormPrin
 	public void gerarPDFLaudoEImg(final String htmlDoLaudo, final ProcDoAtd procDoAtd) {
 		if (escolheuImagensParaImpressao()) {
 			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
 			printer.gerarPDF(gerarHtmlImpressaoLaudoEImg(htmlDoLaudo, procDoAtd));
 		}
 	}
 
+	@Override
+	public File GerarEnvioPdfEmailLaudoEImg(String htmlDoLaudo, ProcDoAtd procDoAtd) {
+		if (escolheuImagensParaImpressao()) {
+			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
+		}
+		return printer.GerarEnvioPDFEmail(gerarHtmlImpressaoLaudoEImg(htmlDoLaudo, procDoAtd));
+	}
+	
+	@Override
+	public File GerarEnvioPdfEmailLaudo(String htmlDoLaudo, ProcDoAtd procDoAtd) {
+		printer.setProcDoAtd(procDoAtd);
+		printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
+		String htmlComAdicionais = addAtdInfoEAssProf(htmlDoLaudo, procDoAtd);
+		int numPages = printer.getNumPages(htmlComAdicionais);
+		if (numPages == 1) {
+			htmlComAdicionais = LaudosHTMLUtils.createTabelaPagina(htmlComAdicionais, numPages, false, 0, true);
+		}
+		return printer.GerarEnvioPDFEmail(htmlComAdicionais);
+	}
+	
+	@Override
+	public File GerarEnvioPdfEmailImagens(ProcDoAtd procDoAtd) {
+		if (pnlEscolherImagens.temLayoutLaudoEImagens() != null) {
+			mediador.gerarPDFLaudoEImagens();
+		} else if (escolheuImagensParaImpressao()) {
+			printer.setProcDoAtd(procDoAtd);
+			printer.pagina = pnlEscolherImagens.getPaginaAtual().getNumPagina();
+			return printer.GerarEnvioPDFEmail(pnlEscolherImagens.gerarHtmlParaImpressao(true, procDoAtd));
+		}
+		
+		return null;
+	}
+	
 	@Override
 	public boolean iniciarGravacaoDeVideo(File arquivo) {
 		return pnlActionsCaptura.iniciarGravacaoDeVideo(arquivo);

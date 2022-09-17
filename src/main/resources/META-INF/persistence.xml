@@ -22,6 +22,7 @@
     <class>com.ic.projects.laudoecia.model.cadastro.AltDeRegistro</class>
     <class>com.ic.projects.laudoecia.model.auditable.ParametrosDoSistema</class>
     <class>com.ic.projects.laudoecia.model.auditable.Licenciado</class>
+    <class>com.ic.projects.laudoecia.model.auditable.EmailParametros</class>
     <class>com.ic.projects.laudoecia.model.auditable.EstacaoDeTrabalho</class>
     <class>com.ic.projects.laudoecia.model.cadastro.Backup</class>
     <class>com.ic.projects.laudoecia.model.cadastro.BackupAutomatico</class>

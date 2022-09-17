@@ -78,6 +78,7 @@ public interface TelaPrincipal extends Tela
     public static final int DADOS_DO_LICENCIADO = 54;
     public static final int PRIMEIRO_ACESSO = 55;
     public static final int SUPORTE_REMOTO = 56;
+    public static final int PARAMETROS_EMAIL = 57;
 
     // custom
     public static final int DLG_CID10 = 60;

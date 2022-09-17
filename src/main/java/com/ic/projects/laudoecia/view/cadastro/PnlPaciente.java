@@ -105,7 +105,7 @@ public class PnlPaciente extends PnlDaEntidadeComCrud<Paciente> {
         pnlTab1.add(new CampoDaEnt("Telefone 1", true, true).setComponent(txtTelefone1), c);
         c.gridwidth = 1;
         c.gridx = 4;
-        pnlTab1.add(new CampoDaEnt("Telefone 2", true, true).setComponent(txtTelefone2), c);
+        pnlTab1.add(new CampoDaEnt("Telefone 2/ Whatsapp", true, true).setComponent(txtTelefone2), c);
         c.gridy = 3;
         c.gridx = 0;
         c.gridwidth = 5;

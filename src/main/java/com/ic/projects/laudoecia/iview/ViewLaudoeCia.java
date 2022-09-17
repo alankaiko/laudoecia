@@ -73,6 +73,11 @@ public interface ViewLaudoeCia
     void gerarPDFApenasImagens (ProcDoAtd procDoAtd);
     void gerarPDFApenasLaudo (String htmlDoLaudo, ProcDoAtd procDoAtd);
     void gerarPDFLaudoEImg (String htmlDoLaudo, ProcDoAtd procDoAtd);
+    
+    // GERAR PDF PRA ENVIO EMAIL
+    File GerarEnvioPdfEmailLaudoEImg (String htmlDoLaudo, ProcDoAtd procDoAtd);
+    File GerarEnvioPdfEmailLaudo (String htmlDoLaudo, ProcDoAtd procDoAtd);
+    File GerarEnvioPdfEmailImagens (ProcDoAtd procDoAtd);
 
     // GRAVAÇÃO/EXPORTAÇÃO
     void exportarArquivosDoProc ();

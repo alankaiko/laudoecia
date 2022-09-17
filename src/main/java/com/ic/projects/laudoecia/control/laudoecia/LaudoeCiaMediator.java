@@ -13,8 +13,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import javax.swing.SwingWorker;
 
@@ -24,6 +33,7 @@ import com.ic.projects.laudoecia.control.ctrlacesso.AdapterPermissaoDeUsuario;
 import com.ic.projects.laudoecia.control.ctrlacesso.ControladorDeAcesso;
 import com.ic.projects.laudoecia.dao.auditable.DaoAtendimento;
 import com.ic.projects.laudoecia.dao.auditable.DaoEstacaoDeTrabalho;
+import com.ic.projects.laudoecia.dao.auditable.DaoImagenImpressa;
 import com.ic.projects.laudoecia.dao.auditable.DaoProcDoAtd;
 import com.ic.projects.laudoecia.dao.auditable.DaoProcMedico;
 import com.ic.projects.laudoecia.dao.cadastro.DaoAcaoDoUsuario;
@@ -39,6 +49,7 @@ import com.ic.projects.laudoecia.model.auditable.ProfExecutante;
 import com.ic.projects.laudoecia.model.basededados.SubcategoriaCID10;
 import com.ic.projects.laudoecia.model.cadastro.Imagem;
 import com.ic.projects.laudoecia.model.cadastro.ImagemImpressa;
+import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
 import com.ic.projects.laudoecia.model.cadastro.PaginaDeImagens;
 import com.ic.projects.laudoecia.model.cadastro.VideoGravado;
 import com.ic.projects.laudoecia.model.enums.LAYOUT_IMG;
@@ -52,14 +63,15 @@ import com.ic.projects.laudoecia.model.notentities.PerfilDeAcesso;
 import com.ic.projects.laudoecia.view.audio.AudioResources;
 import com.ic.projects.laudoecia.view.audio.AudiosLC;
 import com.ic.projects.laudoecia.view.build.FormPrincipal;
+import com.ic.projects.laudoecia.view.laudoecia.ServiceJPEG;
 import com.ic.projects.laudoecia.view.laudoecia.layouts.PnlLayoutImagens;
+import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 import com.lib.icontrol.crud.utils.C_ImpImagens;
 
 /**
  * @author Amsterdam Luís <al@instrumentalcientifico.com.br>
  */
 public class LaudoeCiaMediator {
-
 	// <editor-fold defaultstate="collapsed" desc="Mensagens de erro/Tipo de
 	// exportacao">
 
@@ -103,7 +115,10 @@ public class LaudoeCiaMediator {
 	private NavegadorImagens navegador = new NavegadorImagens();
 	private C_EspacoEmDisco c_EspacoEmDisco;
 	private C_ListaDeVideos c_Videos;
-
+	
+	//Jonathan Alves
+	private List<ImagemJPEG> lista = new ArrayList<ImagemJPEG>();
+	
 	private String viewState;
 	private String telaQueChamouImgFS;
 	private String telaQueChamouEscImg;
@@ -202,7 +217,8 @@ public class LaudoeCiaMediator {
 		return navegador.getImagemAtual();
 	}
 
-	private Imagem getImagemSel() {
+	//Jonathan Alves - alteracoes no metodo
+	private ImagemJPEG getImagemSel() {
 		int indexAtual;
 		if (estaEscolhendoImgAutom) {
 			indexAtual = indexImgSelParaEscolhendoAutom;
@@ -211,7 +227,8 @@ public class LaudoeCiaMediator {
 			indexAtual = getIndexAtual();
 		}
 		if (getNumeroDeImagens() > 0 && indexAtual >= 0) {
-			return procSelecionado.getImagens().get(indexAtual);
+			return this.lista.get(indexAtual);
+			//return procSelecionado.getImagens().get(indexAtual);
 		}
 		return null;
 	}
@@ -270,8 +287,9 @@ public class LaudoeCiaMediator {
 			view.setProcSel(procSelecionado);
 			naoTratarEvtProcMudou = false;
 		} else if (!(novoProcSel == null || (est = getDaoProc().getEstacao(novoProcSel.getCodigo())) == null)) {
-			view.mostrarAviso("O procedimento não pode ser selecionado " + "porque ele está aberto na estação "
-					+ est.getNomeEstacaoDeTrabalho() + "!");
+			view.mostrarAviso("O procedimento não pode ser selecionado " 
+				+ "porque ele está aberto na estação "
+				+ est.getNomeEstacaoDeTrabalho() + "!");
 			naoTratarEvtProcMudou = true;
 			view.setProcSel(procSelecionado);
 			naoTratarEvtProcMudou = false;
@@ -289,7 +307,7 @@ public class LaudoeCiaMediator {
 			procSelecionado = novoProcSel;
 			ProcMedico procMedico;
 
-			List<byte[]> imgBytesList;
+			List<byte[]> imgBytesList = new ArrayList<>();
 			List<PaginaDeImagens> impImgList;
 			if (novoProcSel == null) {
 				procMedico = null;
@@ -303,11 +321,18 @@ public class LaudoeCiaMediator {
 				} catch (Exception e) {
 				}
 				procMedico = novoProcSel.getProcMedico();
-				imgBytesList = converterListaDeImgs(novoProcSel.getImagens());
+				//imgBytesList = converterListaDeImgs(novoProcSel.getImagens());
+				//Jonathan Alves
+				this.AtualizarLista();
+				
+				//Jonathan Alves - classe inteira
+				for(ImagemJPEG jpeg : this.lista)
+					imgBytesList.add(jpeg.getImagem());		
+				
+				
 				impImgList = procSelecionado.getImpressoesDeImg();
 				if (impImgList.isEmpty()) {
-					PaginaDeImagens paginaDeImagens = new PaginaDeImagens(
-							StaticInfo.getParametrosDoSistema().getLayoutImagem());
+					PaginaDeImagens paginaDeImagens = new PaginaDeImagens(StaticInfo.getParametrosDoSistema().getLayoutImagem());
 					paginaDeImagens.setProcDoAtd(procSelecionado);
 					procSelecionado.addImpImagem(paginaDeImagens);
 					impImgList = procSelecionado.getImpressoesDeImg();
@@ -328,28 +353,38 @@ public class LaudoeCiaMediator {
 		}
 	}
 
+	//Jonathan Alves - alteracoes neste metodo
 	public void imagemFoiEditada(byte[] img) {
-		Imagem imagem = new Imagem(img);
+		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
+		captur.EditarImageNaPasta(this.lista.get(getIndexAtual()).getNomeDaImagem(), img);
+		
+		//Imagem imagem = new Imagem(img);
 		naoTratarEvtImpImgMudou = true;
-		imagemImpressaMudou(getImagemSel(), imagem);
+		//imagemImpressaMudou(getImagemSel(), imagem);
 		naoTratarEvtImpImgMudou = false;
-		procSelecionado.setImagem(getIndexAtual(), imagem);
-		navegador.atualizarImgSel(img);
+		//procSelecionado.setImagem(getIndexAtual(), imagem);
+		navegador.atualizarImgSel(img);		
 		view.imgSelMudou();
 		mapaAltImgOuVideo.put(procSelecionado, true);
 	}
 
 	public void imagemFoiCriada(byte[] img, boolean playAudio) {
+		//Jonathan Alves
+		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+		
 		if (atdSelecionado == null) {
 			view.mostrarMsgErro(NENHUM_ATD_SELECIONADO);
 		} else {
-			final Imagem imagem = new Imagem(img);
-			imagem.setIndice(getNumeroDeImagens());
-			procSelecionado.addImagem(imagem);
+			//final Imagem imagem = new Imagem(img);
+			//imagem.setIndice(getNumeroDeImagens());
+			//procSelecionado.addImagem(imagem);
+			captur.CriaImagemNaPasta(img);
 			mapaAltImgOuVideo.put(procSelecionado, true);
 			navegador.addImagem(img);
 			view.addImagem(img);
 			view.atualizarSelecao();
+			this.AtualizarLista();
 			if (playAudio) {
 				new SwingWorker<Void, Void>() {
 					@Override
@@ -362,7 +397,7 @@ public class LaudoeCiaMediator {
 			new SwingWorker<Void, Void>() {
 				@Override
 				protected Void doInBackground() throws Exception {
-					ImgBackupManager.backupImage(procSelecionado.getCodigo(), imagem);
+					//ImgBackupManager.backupImage(procSelecionado.getCodigo(), imagem);
 					return null;
 				}
 			}.execute();
@@ -378,15 +413,23 @@ public class LaudoeCiaMediator {
 			view.mostrarMsgErro(NENHUMA_IMG_SEL);
 		} else if (!view.obterConfirmacaoDoUsuario("Essa ação não " + "pode ser desfeita.\nContinuar mesmo assim?")) {
 		} else {
+			int posicao = getIndexAtual();
 			naoTratarEvtImpImgMudou = true;
-			final Imagem imgSel = getImagemSel();
-			imagemImpressaMudou(imgSel, null);
+
+			//final Imagem imgSel = getImagemSel();
+			//imagemImpressaMudou(imgSel, null);
 			naoTratarEvtImpImgMudou = false;
-			procSelecionado.removeImagem(getIndexAtual());
+			//procSelecionado.removeImagem(getIndexAtual());
 			mapaAltImgOuVideo.put(procSelecionado, true);
 			view.removerImgSelecionada();
 			navegador.removerImgSelecionada();
 			view.atualizarSelecao();
+			
+			//Jonathan Alves
+			ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+			if(referencia.ExcluirImagem(this.lista.get(posicao))) {
+				this.lista.remove(posicao);
+			}			
 		}
 	}
 
@@ -418,7 +461,7 @@ public class LaudoeCiaMediator {
 		return false;
 	}
 
-	public boolean moverImagens(Collection<Imagem> imagens, ProcDoAtd procDestino) {
+	public boolean moverImagens(Collection<ImagemJPEG> imagens, ProcDoAtd procDestino) {
 		if (imagens.isEmpty()) {
 			view.mostrarMsgErro("Escolha pelo menos uma imagem para ser movida!");
 		} else if (procDestino == null) {
@@ -436,9 +479,13 @@ public class LaudoeCiaMediator {
 			// codigo necessário porque senao a coleção, configurada como lazy,
 			// pode não ser lida corretamente no codigo addImagem
 			novoProcDestino.getImagens().size();
-			for (Imagem imagem : imagens) {
-				novoProcDestino.addImagem(new Imagem(imagem.getImagem()));
-				procSelecionado.removeImagem(imagem);
+			for (ImagemJPEG imagem : imagens) {
+				ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, novoProcDestino);
+				referencia.CriaImagemNaPasta(imagem.getImagem());
+				
+				referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+				referencia.ExcluirImagem(imagem);
+
 			}
 			if (Objects.equals(procDestino.getAtendimento(), atdSelecionado)) {
 				mapaAltImgOuVideo.put(novoProcDestino, true);
@@ -459,18 +506,26 @@ public class LaudoeCiaMediator {
 			view.carregarImpressoes(impImgList);
 			naoTratarEvtImpImgMudou = false;
 			view.mostrarMsgSucesso("Imagens movidas com sucesso!");
+			this.Remanejar(procDestino);
 			return true;
 		}
 		return false;
 	}
+	
+	public void Remanejar(ProcDoAtd procdestino) {
+		ProcDoAtd procedimento = getProcSelecionado();
+		this.procMudou(procdestino);
+		this.procMudou(procedimento);
+	}
 
-	public boolean importarImagens(Collection<Imagem> imagens) {
+	public boolean importarImagens(List<ImagemJPEG> imagens) {
 		if (imagens.isEmpty()) {
 			view.mostrarMsgErro("Escolha pelo menos uma imagem para ser importada!");
 		} else {
-			for (Imagem imagen : imagens) {
+			for (ImagemJPEG imagen : imagens) {
 				imagemFoiCriada(imagen.getImagem(), false);
 			}
+			view.mostrarMsgSucesso("Imagens importadas com sucesso!");
 			return true;
 		}
 		return false;
@@ -827,11 +882,10 @@ public class LaudoeCiaMediator {
 		return Collections.unmodifiableList(bytes);
 	}
 
-	private File img2File(Imagem img, String path, int index) throws IOException {
-		File file = new File(path + "\\" + String.valueOf(index) + StaticInfo.EXT_IMAGEM_EXPORTADA);
+	private File img2File(ImagemJPEG img, String path, int index) throws IOException {
+		File file = new File(path + "\\" + img.getNomeDaImagem());
 		if (file.exists()) {
-			if (view.obterConfirmacaoDoUsuario(
-					"O arquivo " + file.getAbsolutePath() + " já existe! Deseja substituí-lo?")) {
+			if (view.obterConfirmacaoDoUsuario("O arquivo " + file.getAbsolutePath() + " já existe! Deseja substituí-lo?")) {
 				file.delete();
 			} else {
 				return null;
@@ -871,7 +925,7 @@ public class LaudoeCiaMediator {
 					boolean salvarLaudo = false;
 					if (procDoAtd.getProcMedico().getModelos().isEmpty()) {
 						salvar = mapaAltImgOuVideo.get(procDoAtd);
-					} else if (laudoMudou(getLaudoDoProc(procDoAtd)) && confirmarAlterarLaudoJaImpresso(procDoAtd)) {
+					} else if (laudoMudou(getLaudoDoProc(procDoAtd))) {
 						salvar = true;
 						salvarLaudo = true;
 					} else {
@@ -1461,6 +1515,17 @@ public class LaudoeCiaMediator {
 			}
 		}
 	}
+	
+	public void pagFoiAtualizada(int indexDaPag, LAYOUT_IMG layoutDaPagina) {
+		if (!(naoTratarEvtImpImgMudou || procSelecionado == null)) {
+			PaginaDeImagens impImg = new PaginaDeImagens();
+			impImg.setProcDoAtd(procSelecionado);
+			impImg.setLayout(layoutDaPagina);
+			procSelecionado.setImpImg(indexDaPag, impImg);
+			mapaAltImgOuVideo.put(procSelecionado, true);
+		}
+	}
+	
 
 	public void pagFoiAdicionada(LAYOUT_IMG layoutDaPagina) {
 		if (!(naoTratarEvtImpImgMudou || procSelecionado == null)) {
@@ -1478,12 +1543,16 @@ public class LaudoeCiaMediator {
 			if (indexDaPag >= 0 && indexDaPag < paginas.size()) {
 				PaginaDeImagens pagina = paginas.get(indexDaPag);
 				List<ImagemImpressa> imagens = pagina.getImagens();
-				Imagem imgSel = getImagemSel();
+				//Imagem imgSel = getImagemSel();
+				//Jonathan Alves
+				ImagemJPEG imgSel = getImagemSel();
+				
 				if (imgSel != null && indexImagem >= 0) {
 					ImagemImpressa imagemImpSel = null;
 					for (int i = 0; i < imagens.size(); i++) {
 						ImagemImpressa imagemImp = imagens.get(i);
 						Imagem imagem = imagemImp.getImagem();
+						
 						if (imagemImp.getIndice() == indexImagem) {
 							imagemImpSel = imagemImp;
 						}
@@ -1494,20 +1563,45 @@ public class LaudoeCiaMediator {
 						// return false;
 						// }
 					}
-					if (imagemImpSel == null) {
+					if (imagemImpSel == null) {						
 						ImagemImpressa imgImp = new ImagemImpressa();
-						imgImp.setImagem(imgSel);
+						//imgImp.setImagem(imgSel);
+						imgImp.setCaminhoimagemjpeg(MontarCaminho()+imgSel.getNomeDaImagem());
+						
 						imgImp.setIndice(indexImagem);
+						
 						imgImp.setPagina(pagina);
 						pagina.addImagem(imgImp);
 					} else {
-						imagemImpSel.setImagem(imgSel);
+						//imagemImpSel.setImagem(imgSel);
+						imagemImpSel.setCaminhoimagemjpeg(MontarCaminho()+imgSel.getNomeDaImagem());
+						AtualizandoFotoEspecifica(imagemImpSel);
+
 					}
+					
 					mapaAltImgOuVideo.put(procSelecionado, true);
 				}
 			}
 		}
 		return true;
+	}
+	
+	private void AtualizandoFotoEspecifica(ImagemImpressa imagemImpSel){
+		DaoImagenImpressa dao = new DaoImagenImpressa();
+		try {
+			dao.alterar(imagemImpSel);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private String MontarCaminho(){
+		String caminho = null;
+		try {
+			caminho = DiretorioDoSistemaUtil.PegaDiretorioDeImagens()+this.procSelecionado.getAtendimento().getCodigo()+"\\";
+		} catch (IOException e) {}
+		
+		return caminho;
 	}
 
 	public void removerImgDoQuadro(int indexDaPag, int indexImagem) {
@@ -1571,6 +1665,7 @@ public class LaudoeCiaMediator {
 				} catch (Exception ex) {
 					view.mostrarMsgErro("Ocorreu um erro inesperado no sistema!");
 				}
+				
 				C_ImpImagens.limpar();
 				PnlLayoutImagens.labelImagem = 0;
 			}
@@ -1606,6 +1701,89 @@ public class LaudoeCiaMediator {
 			C_ImpImagens.limpar();
 			PnlLayoutImagens.labelImagem = 0;
 		}
+	}
+	
+	public File gerarPDFApenasImagensEmail() {
+		File arquivo = null;
+		
+		if (atdSelecionado == null) {
+			view.mostrarMsgErro(NENHUM_ATD_SELECIONADO);
+		} else if (procSelecionado == null) {
+			// assertion error
+		} else if (navegador.getNumeroDeImagens() == 0) {
+			view.mostrarMsgErro(NENHUMA_IMG_CAPT);
+		} else if (!existeImgParaImpressao()) {
+			view.mostrarMsgErro(NENH_IMG_IMP);
+		} else if (TIPO_LICENCA.APENAS_LAUDO.equals(StaticInfo.getLicenciado().getTipodelicenca())) {
+			view.mostrarMsgErro(TIPO_NAO_IMAGENS);
+		} else {
+			arquivo = view.GerarEnvioPdfEmailImagens(procSelecionado);
+			C_ImpImagens.limpar();
+			PnlLayoutImagens.labelImagem = 0;
+		}
+		
+		return arquivo;
+	}
+
+	public File gerarPDFApenasLaudoEmail() {
+		File arquivo = null;
+		if (atdSelecionado == null) {
+			view.mostrarMsgErro(NENHUM_ATD_SELECIONADO);
+		} else if (procSelecionado == null) {
+			// assertion error
+		} else if (laudoAtual == null) {
+			view.mostrarMsgErro(PROC_SEM_MDL);
+		} else if (TIPO_LICENCA.APENAS_IMAGEM.equals(StaticInfo.getLicenciado().getTipodelicenca())) {
+			view.mostrarMsgErro(TIPO_NAO_LAUDOS);
+		} else {
+			if (validarExecParaCriacaoDoLaudo() && salvarAntesDeImprimir()) {
+				try {
+					arquivo = view.GerarEnvioPdfEmailLaudo(laudoAtual.getPlanilha().gerarHtml(true), procSelecionado);
+				} catch (ErrosDeValidacao ex) {
+					setState(ViewLaudoeCia.LAUDO);
+					view.mostrarErroDeValidacaoDoLaudo(ex);
+				} catch (Exception ex) {
+					view.mostrarMsgErro("Ocorreu um erro inesperado no sistema!");
+				}
+				
+				C_ImpImagens.limpar();
+				PnlLayoutImagens.labelImagem = 0;
+			}
+		}
+		return arquivo;
+	}
+	
+	public File GerarLaudoEImagemsPDFEmail() {
+		File arquivo = null;
+		if (atdSelecionado == null) {
+			view.mostrarMsgErro(NENHUM_ATD_SELECIONADO);
+		} else if (procSelecionado == null) {
+			// assertion error
+		} else if (laudoAtual == null) {
+			view.mostrarMsgErro(PROC_SEM_MDL);
+		} else if (navegador.getNumeroDeImagens() == 0) {
+			view.mostrarMsgErro(NENHUMA_IMG_CAPT);
+		} else if (!existeImgParaImpressao()) {
+			view.mostrarMsgErro(NENH_IMG_IMP);
+		} else if (TIPO_LICENCA.APENAS_IMAGEM.equals(StaticInfo.getLicenciado().getTipodelicenca())) {
+			view.mostrarMsgErro(TIPO_NAO_LAUDOS);
+		} else if (TIPO_LICENCA.APENAS_LAUDO.equals(StaticInfo.getLicenciado().getTipodelicenca())) {
+			view.mostrarMsgErro(TIPO_NAO_IMAGENS);
+		} else {
+			if (validarExecParaCriacaoDoLaudo() && salvarAntesDeImprimir()) {
+				try {
+					arquivo = view.GerarEnvioPdfEmailLaudoEImg(laudoAtual.getPlanilha().gerarHtml(true), procSelecionado);
+				} catch (ErrosDeValidacao ex) {
+					setState(ViewLaudoeCia.LAUDO);
+					view.mostrarErroDeValidacaoDoLaudo(ex);
+				} catch (Exception ex) {
+					view.mostrarMsgErro("Ocorreu um erro inesperado no sistema!");
+				}
+			}
+			C_ImpImagens.limpar();
+			PnlLayoutImagens.labelImagem = 0;
+		}
+		return arquivo;
 	}
 
 	// </editor-fold>
@@ -1727,10 +1905,12 @@ public class LaudoeCiaMediator {
 			view.mostrarMsgErro(NENHUMA_IMG_CAPT);
 		} else {
 			List<File> files = new ArrayList<>();
-			List<Imagem> imagens = procSelecionado.getImagens();
+			//List<Imagem> imagens = procSelecionado.getImagens();
+			this.AtualizarLista();
+			
 			try {
-				for (int i = 0; i < imagens.size(); i++) {
-					File f = img2File(imagens.get(i), path, i);
+				for (int i = 0; i < this.lista.size(); i++) {
+					File f = img2File(this.lista.get(i), path, i);
 					if (f != null) {
 						files.add(f);
 					}
@@ -1876,6 +2056,13 @@ public class LaudoeCiaMediator {
 		}
 
 	}
+	
+	//Jonatan - metodo de atualizacao da lista
+	public void AtualizarLista(){
+		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
+		view.atualizarSelecao();
+	}
 
 	public ViewLaudoeCia getView() {
 		return view;
@@ -1888,5 +2075,5 @@ public class LaudoeCiaMediator {
 	public void setCaptura(boolean captura) {
 		this.captura = captura;
 	}
-
+	
 }

@@ -9,6 +9,10 @@ package com.ic.projects.laudoecia.view.laudoecia;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -829,12 +833,14 @@ public class PnlCaptura extends MyJPanel {
 		}
 	}
 
+	//Jonathan Alves - retorno ao metodo original
 	void capturarImg() {
 		try {
 			Image snapshot = c_Captura.capturarImagem();
 			if (snapshot == null) {
 			} else {
 				mediador.imagemFoiCriada(cnv.convertReverse(snapshot), true);
+				mediador.AtualizarLista();
 			}
 			mediador.salvar();
 		} catch (CapturaException ex) {
@@ -845,7 +851,8 @@ public class PnlCaptura extends MyJPanel {
 		} catch (SemDispDeCapturaException ex) {
 			SwingUtils.mostrarMensagemDeErroConhecido(FormPrincipal.getInstance(), "Nenhum dispositivo de captura!");
 		}
-
+	
+	
 	}
 
 	void btnGravarVideoDoClick(boolean tratarSelected) {
