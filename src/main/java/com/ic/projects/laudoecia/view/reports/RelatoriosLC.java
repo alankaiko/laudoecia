@@ -27,4 +27,5 @@ public interface RelatoriosLC
     final String REL_PROF_EXEC = "RelProfExecutante.jasper";
     final String REL_CONVENIOS = "RelConvenios.jasper";
     final String REL_PACIENTES = "RelPacientes.jasper";
+    final String REL_PACIENTE_ANALITICO = "RelPacienteEspecifico.jasper";
 }

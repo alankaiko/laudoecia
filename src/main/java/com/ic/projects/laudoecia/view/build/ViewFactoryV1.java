@@ -9,8 +9,6 @@ package com.ic.projects.laudoecia.view.build;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ic.projects.laudoecia.model.cadastro.Backup;
-import com.ic.projects.laudoecia.model.cadastro.ParametrosDaCaptura;
 import com.ic.projects.laudoecia.model.notentities.PerfilDeAcesso;
 import com.lib.swing.perfildeacesso.LinhaDePermissao;
 import com.lib.swing.perfildeacesso.TabbedPanePerfilDeAcesso;
@@ -59,6 +57,8 @@ public class ViewFactoryV1 extends ViewFactory {
 		ldps.add(new LinhaDePermissao("ParametrosDoSistema", "Ferramentas", "Parametros do sistema"));
 		ldps.add(new LinhaDePermissao("Licenciado", "Ferramentas", "Dados do licenciado"));
 		ldps.add(new LinhaDePermissao("ParametrosEmail", "Ferramentas", "Parametros de E-mail"));
+		ldps.add(new LinhaDePermissao("Consentimento", "Ferramentas", "Consentimento"));
+		ldps.add(new LinhaDePermissao("PoliticaPrivacidade", "Ferramentas", "Políticas de Privacidade"));
 	}
 
 	@Override

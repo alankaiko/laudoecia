@@ -51,6 +51,8 @@
     <class>com.ic.projects.laudoecia.model.cadastro.Abreviatura</class>
     <class>com.ic.projects.laudoecia.model.cadastro.Recorte</class>
     <class>com.ic.projects.laudoecia.model.cadastro.ImagemRestore</class>
+    <class>com.ic.projects.laudoecia.model.auditable.Consentimento</class>
+    <class>com.ic.projects.laudoecia.model.auditable.PoliticaPrivacidade</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="eclipselink.cache.shared.default" value="false"/>

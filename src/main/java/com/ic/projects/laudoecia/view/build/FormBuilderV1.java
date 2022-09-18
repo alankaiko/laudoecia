@@ -256,7 +256,15 @@ class FormBuilderV1 extends FormBuilder {
 							return p.isAcessaAuditoria();
 						}
 					}));
-		}
+		};
+		criarSubMenu("Relatórios LGPD");
+		criarItemDeMenu("Relátorio Paciente Único", new ActionAddTela(TelaPrincipal.REL_PACIENTE_ANALITICO, new AdapterPermissaoDeUsuario() {
+			@Override
+			public boolean podeAcessar(PerfilDeAcesso p) {
+				return true;
+			}
+		}));
+		sairDoSubMenu();
 		criarSeparador();
 		criarItemDeMenu("Todos os relatórios", new ActionAddTela(TelaPrincipal.RELATORIOS_TODOS), "ctrl alt R");
 
@@ -360,6 +368,24 @@ class FormBuilderV1 extends FormBuilder {
 				
 			}
 		});
+		criarSeparador();
+		criarItemDeMenu("Termos de Consentimento",
+			new ActionAddTela(TelaPrincipal.CONSENTIMENTO, new AdapterPermissaoDeUsuario() {
+				@Override
+				public boolean podeAcessar(PerfilDeAcesso p) {
+					return p.isAcessaConsentimento();
+			}
+		}));
+		
+		criarItemDeMenu("Políticas de Privacidade",
+			new ActionAddTela(TelaPrincipal.POLITICAS_PRIVACIDADE, new AdapterPermissaoDeUsuario() {
+				@Override
+				public boolean podeAcessar(PerfilDeAcesso p) {
+					return p.isAcessaPoliticaPrivacidade();
+				}
+			}
+		));
+		
 		alinharProximosADireita();
 
 		criarMenu(" Ajuda ");
@@ -376,7 +402,7 @@ class FormBuilderV1 extends FormBuilder {
 				TermosEContrato.getInstance().abrirContrato();
 			}
 		}).setEnabled(true);
-
+		
 		criarSeparador();
 		criarItemDeMenu("Sobre o sistema", new ActionAddTela(TelaPrincipal.AJUDA_SOBRE));
 

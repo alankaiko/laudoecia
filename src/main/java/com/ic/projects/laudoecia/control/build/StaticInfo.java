@@ -264,6 +264,8 @@ public class StaticInfo
         mapaDeEntdeAudit.put(ProfSolicitante.class.getSimpleName(), "Profissionais Solicitantes");
         mapaDeEntdeAudit.put(TextoPadrao.class.getSimpleName(), "Texto Padrão");
         mapaDeEntdeAudit.put(Usuario.class.getSimpleName(), "Usuários");
+        mapaDeEntdeAudit.put(Consentimento.class.getSimpleName(), "Consentimentos");
+        mapaDeEntdeAudit.put(PoliticaPrivacidade.class.getSimpleName(), "PoliticaPrivacidades");
         listaDeEntidadesAuditaveis.addAll(mapaDeEntdeAudit.values());
         Collections.sort(listaDeEntidadesAuditaveis);
     }

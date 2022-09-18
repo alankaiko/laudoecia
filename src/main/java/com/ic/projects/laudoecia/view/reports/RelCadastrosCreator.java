@@ -5,80 +5,75 @@
  */
 package com.ic.projects.laudoecia.view.reports;
 
+import java.util.List;
+
 import com.ic.projects.laudoecia.control.reports.C_RelCadastros;
 import com.ic.projects.laudoecia.iview.TelaPrincipal;
 import com.ic.projects.laudoecia.view.imagens.ImageResources;
 import com.ic.projects.laudoecia.view.imagens.ImagensLC;
-import net.sf.jasperreports.swing.JRViewer;
 
-import java.util.List;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
  * @author Danilo Brito <danilobrito@instrumentalcientifico.com.br>
  */
-public class RelCadastrosCreator
-{
-    private static C_RelCadastros controlador = new C_RelCadastros(
-            RelatorioResources.class.getResource("/jasper/").toExternalForm(),
-            ImageResources.getUrlImagem(ImagensLC.ICONE_LC).toExternalForm()
-            );
+public class RelCadastrosCreator {
+	private static C_RelCadastros controlador = new C_RelCadastros(
+			RelatorioResources.class.getResource("/jasper/").toExternalForm(),
+			ImageResources.getUrlImagem(ImagensLC.ICONE_LC).toExternalForm());
 
-    public static JRViewer getRelatorio (int tela, List<?> list)
-    {
-        if (list == null || list.isEmpty())
-        {
-            return null;
-        }
-        switch (tela)
-        {
-            case TelaPrincipal.REL_PROC_MEDICO:
-                return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PROC_MEDICO,
-                    controlador.getParametros(), list);
-            case TelaPrincipal.REL_PROF_EXEC:
-                return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PROF_EXEC,
-                    controlador.getParametros(), list);
-            case TelaPrincipal.REL_CONVENIOS:
-                return RelatorioResources.criarRelatorio(RelatoriosLC.REL_CONVENIOS,
-                    controlador.getParametros(), list);
-            case TelaPrincipal.REL_PACIENTES:
-                return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PACIENTES,
-                    controlador.getParametros(), list);
-            default:
-                return null;
-        }
+	public static JRViewer getRelatorio(int tela, List<?> list) {
+		if (list == null || list.isEmpty()) {
+			return null;
+		}
+		switch (tela) {
+		case TelaPrincipal.REL_PROC_MEDICO:
+			return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PROC_MEDICO, controlador.getParametros(), list);
+		case TelaPrincipal.REL_PROF_EXEC:
+			return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PROF_EXEC, controlador.getParametros(), list);
+		case TelaPrincipal.REL_CONVENIOS:
+			return RelatorioResources.criarRelatorio(RelatoriosLC.REL_CONVENIOS, controlador.getParametros(), list);
+		case TelaPrincipal.REL_PACIENTES:
+			return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PACIENTES, controlador.getParametros(), list);
+		case TelaPrincipal.REL_PACIENTE_ANALITICO:
+			return RelatorioResources.criarRelatorio(RelatoriosLC.REL_PACIENTE_ANALITICO, controlador.getParametros(), list);
+		default:
+			return null;
+		}
 
-    }
+	}
 
-    public static boolean exportToPDF (int tela, List<?> list)
-    {
-        if (list == null || list.isEmpty())
-        {
-            return false;
-        }
-        switch (tela)
-        {
-            case TelaPrincipal.REL_PROC_MEDICO:
-                RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PROC_MEDICO,
-                    controlador.getParametros(), list, "Relatório Procedimentos Médicos");
-                break;
-            case TelaPrincipal.REL_PROF_EXEC:
-                RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PROF_EXEC,
-                    controlador.getParametros(), list, "Relatório Profissionais Executantes");
-                break;
-            case TelaPrincipal.REL_CONVENIOS:
-                RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_CONVENIOS,
-                    controlador.getParametros(), list, "Relatório Convênios");
-                break;
-            case TelaPrincipal.REL_PACIENTES:
-                RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PACIENTES,
-                    controlador.getParametros(), list, "Relatório Pacientes");
-                break;
-            default:
-                return false;
-        }
-        return true;
+	public static boolean exportToPDF(int tela, List<?> list) {
+		if (list == null || list.isEmpty()) {
+			return false;
+		}
+		switch (tela) {
+		case TelaPrincipal.REL_PROC_MEDICO:
+			RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PROC_MEDICO, controlador.getParametros(), list,
+					"Relatório Procedimentos Médicos");
+			break;
+		case TelaPrincipal.REL_PROF_EXEC:
+			RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PROF_EXEC, controlador.getParametros(), list,
+					"Relatório Profissionais Executantes");
+			break;
+		case TelaPrincipal.REL_CONVENIOS:
+			RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_CONVENIOS, controlador.getParametros(), list,
+					"Relatório Convênios");
+			break;
+		case TelaPrincipal.REL_PACIENTES:
+			RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PACIENTES, controlador.getParametros(), list,
+					"Relatório Pacientes");
+			break;
+		case TelaPrincipal.REL_PACIENTE_ANALITICO:
+			RelatorioResources.exportarRelatorioToPDF(RelatoriosLC.REL_PACIENTE_ANALITICO, controlador.getParametros(), list,
+					"Relatório Pacientes");
+			break;
+		default:
+			return false;
+		}
+		return true;
 
-    }
+	}
 
 }
