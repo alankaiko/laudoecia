@@ -8,6 +8,7 @@ import com.ic.projects.laudoecia.model.auditable.Atendimento;
 import com.ic.projects.laudoecia.model.auditable.ProcDoAtd;
 import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
+import com.ic.projects.laudoecia.view.utils.EncriptarArquivo;
 
 //Jonathan Alves - classe inteira
 public class ServiceJPEG {
@@ -32,8 +33,9 @@ public class ServiceJPEG {
 	
 	public void CriaImagemNaPasta(byte[] imagem) {
 		try {
-			ConverterParaJPEG conv = new ConverterParaJPEG();
-			conv.Converter(Arquivo(), imagem);
+			EncriptarArquivo criar = new EncriptarArquivo();
+			criar.ReceberArquivo(imagem, this.Arquivo());
+			criar = null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -41,21 +43,19 @@ public class ServiceJPEG {
 	
 	public void EditarImageNaPasta(String nomeImagem, byte[] imagem) {
 		try {
-			ConverterParaJPEG converte = new ConverterParaJPEG();
-			converte.Converter(CriaPastaAtendimento() + nomeImagem, imagem);
+			EncriptarArquivo criar = new EncriptarArquivo();
+			criar.ReceberArquivo(imagem, this.CriaPastaAtendimento() + nomeImagem);
+			criar = null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public boolean ExcluirImagem(ImagemJPEG imagemjpeg) {
+	public void ExcluirImagem(ImagemJPEG imagemjpeg) {
 		try {
 			ConverterParaJPEG converte = new ConverterParaJPEG();
 			converte.ExcluirImagens(CriaPastaAtendimento() + imagemjpeg.getNomeDaImagem());
-			return true;
-		}catch (Exception e) {
-			return false;
-		}
+		}catch (Exception e) {}
 	}
 	
 
@@ -89,7 +89,7 @@ public class ServiceJPEG {
 	// constroi o nome da imagem usando o numero do procedimento e o contador
 	private String ConstroiNomeImagem() {
 		String nome = this.procedimento.getProcMedico().getCodigo() + "";
-		nome = nome + Teste() + ".jpg";
+		nome = nome + Teste() + ".des";
 
 		return nome;
 	}
