@@ -66,6 +66,8 @@ import com.ic.projects.laudoecia.view.build.FormPrincipal;
 import com.ic.projects.laudoecia.view.laudoecia.ServiceJPEG;
 import com.ic.projects.laudoecia.view.laudoecia.layouts.PnlLayoutImagens;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
+import com.ic.projects.laudoecia.view.utils.EncriptarArquivo;
+import com.ic.projects.laudoecia.view.utils.EnvioEmail;
 import com.lib.icontrol.crud.utils.C_ImpImagens;
 
 /**
@@ -380,11 +382,12 @@ public class LaudoeCiaMediator {
 			//imagem.setIndice(getNumeroDeImagens());
 			//procSelecionado.addImagem(imagem);
 			captur.CriaImagemNaPasta(img);
+			
 			mapaAltImgOuVideo.put(procSelecionado, true);
 			navegador.addImagem(img);
 			view.addImagem(img);
 			view.atualizarSelecao();
-			this.AtualizarLista();
+			AtualizarLista();
 			if (playAudio) {
 				new SwingWorker<Void, Void>() {
 					@Override
@@ -413,9 +416,7 @@ public class LaudoeCiaMediator {
 			view.mostrarMsgErro(NENHUMA_IMG_SEL);
 		} else if (!view.obterConfirmacaoDoUsuario("Essa ação não " + "pode ser desfeita.\nContinuar mesmo assim?")) {
 		} else {
-			int posicao = getIndexAtual();
 			naoTratarEvtImpImgMudou = true;
-
 			//final Imagem imgSel = getImagemSel();
 			//imagemImpressaMudou(imgSel, null);
 			naoTratarEvtImpImgMudou = false;
@@ -427,9 +428,7 @@ public class LaudoeCiaMediator {
 			
 			//Jonathan Alves
 			ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
-			if(referencia.ExcluirImagem(this.lista.get(posicao))) {
-				this.lista.remove(posicao);
-			}			
+			referencia.ExcluirImagem(this.lista.get(getIndexAtual()));
 		}
 	}
 
@@ -525,7 +524,6 @@ public class LaudoeCiaMediator {
 			for (ImagemJPEG imagen : imagens) {
 				imagemFoiCriada(imagen.getImagem(), false);
 			}
-			view.mostrarMsgSucesso("Imagens importadas com sucesso!");
 			return true;
 		}
 		return false;
@@ -1906,7 +1904,7 @@ public class LaudoeCiaMediator {
 		} else {
 			List<File> files = new ArrayList<>();
 			//List<Imagem> imagens = procSelecionado.getImagens();
-			this.AtualizarLista();
+			AtualizarLista();
 			
 			try {
 				for (int i = 0; i < this.lista.size(); i++) {
@@ -2059,9 +2057,9 @@ public class LaudoeCiaMediator {
 	
 	//Jonatan - metodo de atualizacao da lista
 	public void AtualizarLista(){
-		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
-		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
-		view.atualizarSelecao();
+//		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+//		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
+//		view.atualizarSelecao();
 	}
 
 	public ViewLaudoeCia getView() {

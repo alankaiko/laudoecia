@@ -19,6 +19,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 
 import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
+import com.ic.projects.laudoecia.view.utils.DecriptarArquivo;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 
 //Jonathan Alves
@@ -40,12 +41,14 @@ public class ConverterParaJPEG {
 		   }
 		};
 		
+		DecriptarArquivo dec = new DecriptarArquivo();
+		
 		File[] arquivos = dir.listFiles(filtro);
 		if(!arquivos.equals(null)) {
 			for(File file : arquivos) {
 				ImagemJPEG imagem = new ImagemJPEG();
 				imagem.setNomeDaImagem(file.getName());
-				imagem.setImagem(CarregandoImagens(caminho + file.getName()));
+				imagem.setImagem(dec.DevolverArquivo(caminho + file.getName()));
 				lista.add(imagem);
 			}
 		}
