@@ -146,12 +146,10 @@ public class PrintLaudo {
 		tmpPane.setContentType("text/html");
 		tmpPane.setText(html);
 
-		//Jonatan Alves - alteracao neste trecho abaixo
 		Paper paper = new Paper();
 		ParametrosDoSistema param = new ParametrosDoSistema();
 		param = StaticInfo.getParametrosDoSistema();
-		
-		//Jonatan Alves - inclusao deste trecho abaixo
+
 		if(procDoAtd != null) {
 			if(procDoAtd.getImpressoesDeImg().get(pagina-1).getLayout().equals(LAYOUT_IMG.LAYOUT_8_IMG_GRANDES)){
 				param.setImprimeCabecalhoLaudo(false);

@@ -833,7 +833,6 @@ public class PnlCaptura extends MyJPanel {
 		}
 	}
 
-	//Jonathan Alves - retorno ao metodo original
 	void capturarImg() {
 		try {
 			Image snapshot = c_Captura.capturarImagem();

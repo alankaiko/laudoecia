@@ -15,11 +15,6 @@ import org.jfree.ui.tabbedui.VerticalLayout;
 import com.ic.projects.laudoecia.control.laudoecia.LaudoeCiaMediator;
 import com.lib.swing.plus.cps.MyJPanel;
 
-/**
- *
- * @author Danilo Brito <danilobrito@instrumentalcientifico.com.br>
- */
- //Jonatan Alves - alteracao nos tamanhos dos quadros das imagens - para 270,185
 public class PnlLayout8ImgGrandes extends PnlLayoutImagens {
 	public PnlLayout8ImgGrandes(LaudoeCiaMediator mediador) {
 		super(mediador);

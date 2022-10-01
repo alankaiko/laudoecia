@@ -10,9 +10,7 @@ import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 import com.ic.projects.laudoecia.view.utils.EncriptarArquivo;
 
-//Jonathan Alves - classe inteira
 public class ServiceJPEG {
-	//private LaudoeCiaMediator mediator;
 	private Atendimento atendimento;
 	private ProcDoAtd procedimento;
 	private int cont = 1;
@@ -89,12 +87,12 @@ public class ServiceJPEG {
 	// constroi o nome da imagem usando o numero do procedimento e o contador
 	private String ConstroiNomeImagem() {
 		String nome = this.procedimento.getProcMedico().getCodigo() + "";
-		nome = nome + Teste() + ".des";
+		nome = nome + this.ConcatenarNomeImagem() + ".des";
 
 		return nome;
 	}
 
-	private String Teste() {
+	private String ConcatenarNomeImagem() {
 		return String.format("%02d", this.cont);
 	}
 

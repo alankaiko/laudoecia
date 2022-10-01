@@ -20,8 +20,6 @@ import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
 import com.ic.projects.laudoecia.model.cadastro.Abreviatura;
@@ -40,8 +38,6 @@ class DesenhistaDeTexto extends Desenhista {
 	};
 	
 	private FontSource fontSource = nullFontSource;
-	//private TxtArea txtArea = new TxtArea();
-	//Jonathan Alves
 	private JTextComponent txtArea = new JTextField();
 	private UtilsCompletaTexto util;
 	private int x;
@@ -49,7 +45,6 @@ class DesenhistaDeTexto extends Desenhista {
 
 	DesenhistaDeTexto(Painter decorator) {
 		super(decorator);
-		//Jonathan Alves
 		util = new UtilsCompletaTexto(this);
 		PropriedadesAreadeTexto();
 	}

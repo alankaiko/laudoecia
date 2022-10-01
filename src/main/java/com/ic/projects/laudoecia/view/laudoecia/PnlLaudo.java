@@ -46,10 +46,12 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.TableCellRenderer;
 
 import com.ic.projects.laudoecia.control.autocompletar.BuscadorDeMdlDoProc;
+import com.ic.projects.laudoecia.control.build.LaudoeCia;
 import com.ic.projects.laudoecia.control.laudoecia.C_TxtPreview;
 import com.ic.projects.laudoecia.control.laudoecia.LaudoeCiaMediator;
 import com.ic.projects.laudoecia.iview.PreviewCampoDoLaudo;
 import com.ic.projects.laudoecia.model.auditable.ProcMedico;
+import com.ic.projects.laudoecia.model.auditable.Usuario;
 import com.ic.projects.laudoecia.model.laudo.CampoDoLaudo;
 import com.ic.projects.laudoecia.model.laudo.Laudo;
 import com.ic.projects.laudoecia.model.laudo.ModeloDeLaudoDoProc;
@@ -141,9 +143,14 @@ public class PnlLaudo extends MyJPanel {
 		btnSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+			Usuario resp = LaudoeCia.getTelaPrincipal().solicitarUsuario();
+
+			if(resp != null) {
 				setCursor(new Cursor(Cursor.WAIT_CURSOR));
 				mediador.salvar();
 				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
 			}
 
 		});
