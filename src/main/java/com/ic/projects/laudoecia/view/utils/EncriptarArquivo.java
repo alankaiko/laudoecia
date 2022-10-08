@@ -21,36 +21,13 @@ public class EncriptarArquivo {
 	public void ReceberArquivo(byte[] imagem, String nomecaminhoimagem){
 		try {
 			FileOutputStream arquivofinal = new FileOutputStream(nomecaminhoimagem);
-			this.encryptOrDecrypt(arquivofinal, imagem);
-			//FileOutputStream arquivofinal = new FileOutputStream(nomecaminhoimagem);
-			//this.Encriptar(imagem, arquivofinal);
-			//arquivofinal.close();
+			this.Encriptar(arquivofinal, imagem);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void Encriptar(byte[] imagem, FileOutputStream arqsaida)throws Exception {
-		ConverterParaJPEG jpeg = new ConverterParaJPEG();
-		File file = jpeg.Converter(imagem);
-
-		PBEKeySpec chave = new PBEKeySpec(this.senhapadrao.toCharArray());
-		SecretKeyFactory instancia = SecretKeyFactory.getInstance("PBEWithMD5AndTripleDES");
-		SecretKey chavesecreta = instancia.generateSecret(chave);
-		byte[] arquivo = new byte[8];
-		Random randomico = new Random();
-		randomico.nextBytes(arquivo);
-		PBEParameterSpec parametro = new PBEParameterSpec(arquivo, 100);
-		Cipher cipher = Cipher.getInstance("PBEWithMD5AndTripleDES");
-		cipher.init(Cipher.ENCRYPT_MODE, chavesecreta, parametro);
-		byte[] a = cipher.update(imagem);
-		arqsaida.write(a);
-		arqsaida.flush();
-		arqsaida.close();
-	}
-
-
-	public void encryptOrDecrypt(OutputStream os, byte[] imagem) throws Exception {
+	public void Encriptar(OutputStream os, byte[] imagem) throws Exception {
 		ConverterParaJPEG jpeg = new ConverterParaJPEG();
 		File file = jpeg.Converter(imagem);
 
