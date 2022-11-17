@@ -129,7 +129,7 @@ public class PnlLaudo extends MyJPanel {
 	private BtnTextoEmBaixo btnModelo = new BtnTextoEmBaixo("Modelo");
 	private BtnTextoEmBaixo btnReceituario = new BtnTextoEmBaixo("Receita");
 	private BtnTextoEmBaixo btnVisualizar = new BtnTextoEmBaixo("Visualizar laudo");
-	private BtnTextoEmBaixo btnEnviarWhats = new BtnTextoEmBaixo("Env. WathsApp");
+	//private BtnTextoEmBaixo btnEnviarWhats = new BtnTextoEmBaixo("Env. WathsApp");
 
 	{
 		tBar.setFloatable(false);
@@ -208,17 +208,17 @@ public class PnlLaudo extends MyJPanel {
 		});
 		btnVisualizar.setPreferredWidth(115);
 
-		btnEnviarWhats.setIcon(ImageResources.getIcon(ImagensLC.ENVIOWHATS));
-		btnEnviarWhats.setFont(fontBtnsVert);
-		btnEnviarWhats.setToolTipText("Enviar pelo WhatsApp");
-		btnEnviarWhats.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int y = btnEnviarWhats.getSize().height;
-				popupPDFzap.show(btnEnviarWhats, 0, y);
-			}
-		});
-		btnEnviarWhats.setPreferredWidth(115);
+//		btnEnviarWhats.setIcon(ImageResources.getIcon(ImagensLC.ENVIOWHATS));
+//		btnEnviarWhats.setFont(fontBtnsVert);
+//		btnEnviarWhats.setToolTipText("Enviar pelo WhatsApp");
+//		btnEnviarWhats.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				int y = btnEnviarWhats.getSize().height;
+//				popupPDFzap.show(btnEnviarWhats, 0, y);
+//			}
+//		});
+//		btnEnviarWhats.setPreferredWidth(115);
 
 		btnEscImg.setIcon(ImageResources.getIcon(ImagensLC.ESCOLHER_IMAGENS));
 		btnEscImg.setFont(fontBtnsVert);
@@ -268,7 +268,7 @@ public class PnlLaudo extends MyJPanel {
 		tBar.add(btnEscImg);
 		tBar.add(btnModelo);
 		tBar.add(btnReceituario);
-		tBar.add(btnEnviarWhats);
+		//tBar.add(btnEnviarWhats);
 
 		pnlMenuSup.setLayout(new BorderLayout());
 		pnlMenuSup.add(tBar, BorderLayout.CENTER);

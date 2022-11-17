@@ -56,7 +56,7 @@ public class ViewFactoryV1 extends ViewFactory {
 		// ldps.add(new LinhaDePermissao("ParametrosDaCaptura", "Ferramentas", "Parametros da Captura"));
 		ldps.add(new LinhaDePermissao("ParametrosDoSistema", "Ferramentas", "Parametros do sistema"));
 		ldps.add(new LinhaDePermissao("Licenciado", "Ferramentas", "Dados do licenciado"));
-		ldps.add(new LinhaDePermissao("ParametrosEmail", "Ferramentas", "Parametros de E-mail"));
+		//ldps.add(new LinhaDePermissao("ParametrosEmail", "Ferramentas", "Parametros de E-mail"));
 		ldps.add(new LinhaDePermissao("Consentimento", "Ferramentas", "Consentimento"));
 		ldps.add(new LinhaDePermissao("PoliticaPrivacidade", "Ferramentas", "Políticas de Privacidade"));
 	}

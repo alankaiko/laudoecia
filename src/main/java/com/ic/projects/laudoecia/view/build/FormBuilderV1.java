@@ -346,13 +346,13 @@ class FormBuilderV1 extends FormBuilder {
 					}
 				}));
 
-		criarItemDeMenu("Parametros de E-mail",
-				new ActionAddTela(TelaPrincipal.PARAMETROS_EMAIL, new AdapterPermissaoDeUsuario() {
-					@Override
-					public boolean podeAcessar(PerfilDeAcesso p) {
-						return p.isAcessaParametrosEmail();
-					}
-				}));
+//		criarItemDeMenu("Parametros de E-mail",
+//				new ActionAddTela(TelaPrincipal.PARAMETROS_EMAIL, new AdapterPermissaoDeUsuario() {
+//					@Override
+//					public boolean podeAcessar(PerfilDeAcesso p) {
+//						return p.isAcessaParametrosEmail();
+//					}
+//				}));
 		
 		//Com um pouco de pressa
 		criarItemDeMenu("Abrir pasta de imagens selecionadas", new ActionListener() {
