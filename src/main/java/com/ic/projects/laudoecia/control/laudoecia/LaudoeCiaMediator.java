@@ -421,8 +421,11 @@ public class LaudoeCiaMediator {
 			navegador.removerImgSelecionada();
 			view.atualizarSelecao();
 
+			System.out.println(getIndexAtual());
+			this.AtualizarLista();
+
 			ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
-			referencia.ExcluirImagem(this.lista.get(getIndexAtual()));
+			referencia.ExcluirImagem(getIndexAtual() > 0 ? this.lista.get(getIndexAtual()) : this.lista.get(0));
 		}
 	}
 
@@ -875,7 +878,8 @@ public class LaudoeCiaMediator {
 	}
 
 	private File img2File(ImagemJPEG img, String path, int index) throws IOException {
-		File file = new File(path + "\\" + img.getNomeDaImagem());
+		String[] nomeDaImagem = img.getNomeDaImagem().split("\\.");
+		File file = new File(path + "\\" + nomeDaImagem[0] + ".jpeg");
 		if (file.exists()) {
 			if (view.obterConfirmacaoDoUsuario("O arquivo " + file.getAbsolutePath() + " já existe! Deseja substituí-lo?")) {
 				file.delete();
@@ -1901,7 +1905,7 @@ public class LaudoeCiaMediator {
 			
 			try {
 				for (int i = 0; i < this.lista.size(); i++) {
-					File f = img2File(this.lista.get(i), path, i);
+					File f = this.img2File(this.lista.get(i), path, i);
 					if (f != null) {
 						files.add(f);
 					}
