@@ -25,7 +25,7 @@ import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 public class ConverterParaJPEG {
 
 	public List<ImagemJPEG> listaDeImagensCapturadas(Integer codigoProcedimento, Integer idAtendimento){
-		List<ImagemJPEG> lista = new ArrayList<ImagemJPEG>();
+		List<ImagemJPEG> lista = new ArrayList<>();
 		String caminho = null;
 		final String nome = codigoProcedimento+"";
 

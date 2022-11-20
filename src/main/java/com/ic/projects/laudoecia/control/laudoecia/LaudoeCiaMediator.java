@@ -66,8 +66,6 @@ import com.ic.projects.laudoecia.view.build.FormPrincipal;
 import com.ic.projects.laudoecia.view.laudoecia.ServiceJPEG;
 import com.ic.projects.laudoecia.view.laudoecia.layouts.PnlLayoutImagens;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
-import com.ic.projects.laudoecia.view.utils.EncriptarArquivo;
-import com.ic.projects.laudoecia.view.utils.EnvioEmail;
 import com.lib.icontrol.crud.utils.C_ImpImagens;
 
 /**
@@ -2049,7 +2047,6 @@ public class LaudoeCiaMediator {
 			getDaoImagem().cadastrarImagem(img, proc);
 			return null;
 		}
-
 	}
 
 	public void AtualizarLista(){
