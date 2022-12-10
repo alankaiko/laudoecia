@@ -49,7 +49,7 @@ import com.lib.java.utils.SystemUtils;
 public class LaudoeCia {
 
 	public static final String NOME_DO_SISTEMA = "LaudoeCia";
-	public static final VERSAO_DO_SW VERSAO_DO_SISTEMA_ENUM = VERSAO_DO_SW.V1_9_9_5;
+	public static final VERSAO_DO_SW VERSAO_DO_SISTEMA_ENUM = VERSAO_DO_SW.V1_9_9_4;
 	public static final String VERSAO_DO_SISTEMA = VERSAO_DO_SISTEMA_ENUM.getTipo();
 	public static final String TELEFONE = "(62) 3643-6264";
 	public static final String EMAIL = "contato@semprimed.com.br";

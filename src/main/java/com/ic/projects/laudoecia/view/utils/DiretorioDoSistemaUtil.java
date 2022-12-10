@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.ic.projects.laudoecia.control.build.StaticInfo;
 
+//Jonathan Alves - classe inteira
 public class DiretorioDoSistemaUtil {
 	
 	//retorna o diretorio das imagens

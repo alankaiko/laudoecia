@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import javax.swing.*;
+import javax.swing.SwingWorker;
 
 import com.ic.projects.laudoecia.control.build.LaudoeCia;
 import com.ic.projects.laudoecia.control.build.StaticInfo;
@@ -116,7 +116,8 @@ public class LaudoeCiaMediator {
 	private NavegadorImagens navegador = new NavegadorImagens();
 	private C_EspacoEmDisco c_EspacoEmDisco;
 	private C_ListaDeVideos c_Videos;
-
+	
+	//Jonathan Alves
 	private List<ImagemJPEG> lista = new ArrayList<ImagemJPEG>();
 	
 	private String viewState;
@@ -217,6 +218,7 @@ public class LaudoeCiaMediator {
 		return navegador.getImagemAtual();
 	}
 
+	//Jonathan Alves - alteracoes no metodo
 	private ImagemJPEG getImagemSel() {
 		int indexAtual;
 		if (estaEscolhendoImgAutom) {
@@ -303,7 +305,6 @@ public class LaudoeCiaMediator {
 				} catch (Exception e) {
 				}
 			}
-
 			procSelecionado = novoProcSel;
 			ProcMedico procMedico;
 
@@ -322,8 +323,10 @@ public class LaudoeCiaMediator {
 				}
 				procMedico = novoProcSel.getProcMedico();
 				//imgBytesList = converterListaDeImgs(novoProcSel.getImagens());
+				//Jonathan Alves
 				this.AtualizarLista();
-
+				
+				//Jonathan Alves - classe inteira
 				for(ImagemJPEG jpeg : this.lista)
 					imgBytesList.add(jpeg.getImagem());		
 				
@@ -351,6 +354,7 @@ public class LaudoeCiaMediator {
 		}
 	}
 
+	//Jonathan Alves - alteracoes neste metodo
 	public void imagemFoiEditada(byte[] img) {
 		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
 		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
@@ -367,6 +371,7 @@ public class LaudoeCiaMediator {
 	}
 
 	public void imagemFoiCriada(byte[] img, boolean playAudio) {
+		//Jonathan Alves
 		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
 		
 		if (atdSelecionado == null) {
@@ -376,12 +381,11 @@ public class LaudoeCiaMediator {
 			//imagem.setIndice(getNumeroDeImagens());
 			//procSelecionado.addImagem(imagem);
 			captur.CriaImagemNaPasta(img);
-			
 			mapaAltImgOuVideo.put(procSelecionado, true);
 			navegador.addImagem(img);
 			view.addImagem(img);
 			view.atualizarSelecao();
-			AtualizarLista();
+			this.AtualizarLista();
 			if (playAudio) {
 				new SwingWorker<Void, Void>() {
 					@Override
@@ -410,7 +414,9 @@ public class LaudoeCiaMediator {
 			view.mostrarMsgErro(NENHUMA_IMG_SEL);
 		} else if (!view.obterConfirmacaoDoUsuario("Essa ação não " + "pode ser desfeita.\nContinuar mesmo assim?")) {
 		} else {
+			int posicao = getIndexAtual();
 			naoTratarEvtImpImgMudou = true;
+
 			//final Imagem imgSel = getImagemSel();
 			//imagemImpressaMudou(imgSel, null);
 			naoTratarEvtImpImgMudou = false;
@@ -419,12 +425,12 @@ public class LaudoeCiaMediator {
 			view.removerImgSelecionada();
 			navegador.removerImgSelecionada();
 			view.atualizarSelecao();
-
-			System.out.println(getIndexAtual());
-			this.AtualizarLista();
-
+			
+			//Jonathan Alves
 			ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
-			referencia.ExcluirImagem(getIndexAtual() > 0 ? this.lista.get(getIndexAtual()) : this.lista.get(0));
+			if(referencia.ExcluirImagem(this.lista.get(posicao))) {
+				this.lista.remove(posicao);
+			}			
 		}
 	}
 
@@ -520,6 +526,7 @@ public class LaudoeCiaMediator {
 			for (ImagemJPEG imagen : imagens) {
 				imagemFoiCriada(imagen.getImagem(), false);
 			}
+			view.mostrarMsgSucesso("Imagens importadas com sucesso!");
 			return true;
 		}
 		return false;
@@ -876,8 +883,7 @@ public class LaudoeCiaMediator {
 	}
 
 	private File img2File(ImagemJPEG img, String path, int index) throws IOException {
-		String[] nomeDaImagem = img.getNomeDaImagem().split("\\.");
-		File file = new File(path + "\\" + nomeDaImagem[0] + ".jpeg");
+		File file = new File(path + "\\" + img.getNomeDaImagem());
 		if (file.exists()) {
 			if (view.obterConfirmacaoDoUsuario("O arquivo " + file.getAbsolutePath() + " já existe! Deseja substituí-lo?")) {
 				file.delete();
@@ -1538,6 +1544,7 @@ public class LaudoeCiaMediator {
 				PaginaDeImagens pagina = paginas.get(indexDaPag);
 				List<ImagemImpressa> imagens = pagina.getImagens();
 				//Imagem imgSel = getImagemSel();
+				//Jonathan Alves
 				ImagemJPEG imgSel = getImagemSel();
 				
 				if (imgSel != null && indexImagem >= 0) {
@@ -1899,11 +1906,11 @@ public class LaudoeCiaMediator {
 		} else {
 			List<File> files = new ArrayList<>();
 			//List<Imagem> imagens = procSelecionado.getImagens();
-			AtualizarLista();
+			this.AtualizarLista();
 			
 			try {
 				for (int i = 0; i < this.lista.size(); i++) {
-					File f = this.img2File(this.lista.get(i), path, i);
+					File f = img2File(this.lista.get(i), path, i);
 					if (f != null) {
 						files.add(f);
 					}
@@ -2047,16 +2054,14 @@ public class LaudoeCiaMediator {
 			getDaoImagem().cadastrarImagem(img, proc);
 			return null;
 		}
-	}
 
+	}
+	
+	//Jonatan - metodo de atualizacao da lista
 	public void AtualizarLista(){
-		if(this.procSelecionado != null && this.procSelecionado.getProcMedico() != null && this.procSelecionado.getAtendimento() != null) {
-			ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
-			this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
-			view.atualizarSelecao();
-		}else {
-			JOptionPane.showMessageDialog(null, "Procedimento ou Atendimento está nulo");
-		}
+		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
+		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
+		view.atualizarSelecao();
 	}
 
 	public ViewLaudoeCia getView() {

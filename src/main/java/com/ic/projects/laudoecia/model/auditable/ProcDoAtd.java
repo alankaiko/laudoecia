@@ -209,6 +209,28 @@ public class ProcDoAtd implements Serializable, Comparable<ProcDoAtd> {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ProcDoAtd other = (ProcDoAtd) obj;
+		if (this.codigo != other.getCodigo()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 37 * hash + this.codigo;
+		return hash;
+	}
+
+	@Override
 	public int compareTo(ProcDoAtd o) {
 		return Comparador.compararRemovendoAcentos(this, o);
 	}
@@ -353,19 +375,4 @@ public class ProcDoAtd implements Serializable, Comparable<ProcDoAtd> {
 
 	// </editor-fold>
 
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		ProcDoAtd procDoAtd = (ProcDoAtd) o;
-
-		return codigo == procDoAtd.codigo;
-	}
-
-	@Override
-	public int hashCode() {
-		return codigo;
-	}
 }

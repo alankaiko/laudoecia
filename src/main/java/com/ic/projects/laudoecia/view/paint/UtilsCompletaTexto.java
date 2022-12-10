@@ -15,6 +15,7 @@ import com.ic.projects.laudoecia.model.cadastro.Abreviatura;
 import com.ic.projects.laudoecia.model.enums.PARAMETRO_BUSCA_SIGLA;
 import com.mxrck.autocompleter.TextAutoCompleter;
 
+//Jonathan Alves - classe inteira
 public class UtilsCompletaTexto implements KeyListener, FocusListener, MouseListener{
 	private DesenhistaDeTexto desenho;
 	private TextAutoCompleter completer;

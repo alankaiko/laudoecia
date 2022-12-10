@@ -129,6 +129,7 @@ public class LaudosHTMLUtils {
 		return html;
 	}
 
+	// Jonatan Alves - inclusao deste metodo
 	private static String createAtdInfoPra8Imagens() {
 		if (procedimento == null) {
 			return "";
@@ -313,6 +314,7 @@ public class LaudosHTMLUtils {
 	}
 
 	private static String getHtmlHeader(boolean impAtdInfo) {
+		// Jonatan Alves - inclusao desta linha abaixo
 		List<LAYOUT_IMG> listaTemp = new ArrayList<LAYOUT_IMG>();
 
 		String imgTag = "";
@@ -343,10 +345,12 @@ public class LaudosHTMLUtils {
 			}
 		}
 
+		// Jonatan Alves - inclusao deste trecho abaixo
 		if (valor == true) {
 			for (PaginaDeImagens a : procedimento.getImpressoesDeImg())
 				listaTemp.add(a.getLayout());
 
+			// Jonatan Alves - alteracao neste trecho abaixo
 			if (impAtdInfo) {
 				if (listaTemp.contains(LAYOUT_IMG.LAYOUT_8_IMG_GRANDES))
 					textoCabecalho += createAtdInfoPra8Imagens();

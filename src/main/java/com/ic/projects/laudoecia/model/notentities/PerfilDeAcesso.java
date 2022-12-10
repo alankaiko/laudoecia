@@ -246,32 +246,6 @@ public class PerfilDeAcesso implements Serializable {
 
 	@Column(name = "apagaparametrosemail", nullable = false)
 	private boolean apagaParametrosEmail = false;
-	
-	// Altera Termo Consentimento
-	@Column(name = "acessaconsentimento", nullable = false)
-	private boolean acessaConsentimento = false;
-
-	@Column(name = "adicionaconsentimento", nullable = false)
-	private boolean adicionaConsentimento = false;
-
-	@Column(name = "alteraconsentimento", nullable = false)
-	private boolean alteraConsentimento = false;
-
-	@Column(name = "apagaconsentimento", nullable = false)
-	private boolean apagaConsentimento = false;
-	
-	// Altera Politica de Privacidade
-	@Column(name = "acessapoliticaprivacidade", nullable = false)
-	private boolean acessaPoliticaPrivacidade = false;
-
-	@Column(name = "adicionapoliticaprivacidade", nullable = false)
-	private boolean adicionaPoliticaPrivacidade = false;
-	
-	@Column(name = "alterapoliticaprivacidade", nullable = false)
-	private boolean alteraPoliticaPrivacidade = false;
-
-	@Column(name = "apagapoliticaprivacidade", nullable = false)
-	private boolean apagaPoliticaPrivacidade = false;
 
 	// </editor-fold>
 
@@ -820,71 +794,6 @@ public class PerfilDeAcesso implements Serializable {
 	public void setApagaParametrosEmail(boolean apagaParametrosEmail) {
 		this.apagaParametrosEmail = apagaParametrosEmail;
 	}
-
-	public boolean isAcessaConsentimento() {
-		return acessaConsentimento;
-	}
-
-	public void setAcessaConsentimento(boolean acessaConsentimento) {
-		this.acessaConsentimento = acessaConsentimento;
-	}
-
-	public boolean isAdicionaConsentimento() {
-		return adicionaConsentimento;
-	}
-
-	public void setAdicionaConsentimento(boolean adicionaConsentimento) {
-		this.adicionaConsentimento = adicionaConsentimento;
-	}
-
-	public boolean isAlteraConsentimento() {
-		return alteraConsentimento;
-	}
-
-	public void setAlteraConsentimento(boolean alteraConsentimento) {
-		this.alteraConsentimento = alteraConsentimento;
-	}
-
-	public boolean isApagaConsentimento() {
-		return apagaConsentimento;
-	}
-
-	public void setApagaConsentimento(boolean apagaConsentimento) {
-		this.apagaConsentimento = apagaConsentimento;
-	}
-
-	public boolean isAcessaPoliticaPrivacidade() {
-		return acessaPoliticaPrivacidade;
-	}
-
-	public void setAcessaPoliticaPrivacidade(boolean acessaPoliticaPrivacidade) {
-		this.acessaPoliticaPrivacidade = acessaPoliticaPrivacidade;
-	}
-
-	public boolean isAdicionaPoliticaPrivacidade() {
-		return adicionaPoliticaPrivacidade;
-	}
-
-	public void setAdicionaPoliticaPrivacidade(boolean adicionaPoliticaPrivacidade) {
-		this.adicionaPoliticaPrivacidade = adicionaPoliticaPrivacidade;
-	}
-
-	public boolean isAlteraPoliticaPrivacidade() {
-		return alteraPoliticaPrivacidade;
-	}
-
-	public void setAlteraPoliticaPrivacidade(boolean alteraPoliticaPrivacidade) {
-		this.alteraPoliticaPrivacidade = alteraPoliticaPrivacidade;
-	}
-
-	public boolean isApagaPoliticaPrivacidade() {
-		return apagaPoliticaPrivacidade;
-	}
-
-	public void setApagaPoliticaPrivacidade(boolean apagaPoliticaPrivacidade) {
-		this.apagaPoliticaPrivacidade = apagaPoliticaPrivacidade;
-	}	
-
 	// </editor-fold>
 
 }

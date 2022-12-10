@@ -19,39 +19,37 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 
 import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
-import com.ic.projects.laudoecia.view.utils.DecriptarArquivo;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 
+//Jonathan Alves
 public class ConverterParaJPEG {
 
 	public List<ImagemJPEG> listaDeImagensCapturadas(Integer codigoProcedimento, Integer idAtendimento){
-		List<ImagemJPEG> lista = new ArrayList<>();
+		List<ImagemJPEG> lista = new ArrayList<ImagemJPEG>();
 		String caminho = null;
 		final String nome = codigoProcedimento+"";
-
+		
 		try {
 			caminho = DiretorioDoSistemaUtil.PegaDiretorioDeImagens()  + idAtendimento+"\\";
 		} catch (IOException e) {}
-
+		
 		File dir = new File(caminho);
 		FileFilter filtro = new FileFilter(){
 		   public boolean accept(File arq) {
 		      return arq.getName().startsWith(nome);
 		   }
 		};
-
-		DecriptarArquivo dec = new DecriptarArquivo();
-
+		
 		File[] arquivos = dir.listFiles(filtro);
 		if(!arquivos.equals(null)) {
 			for(File file : arquivos) {
 				ImagemJPEG imagem = new ImagemJPEG();
 				imagem.setNomeDaImagem(file.getName());
-				imagem.setImagem(dec.DevolverArquivo(caminho + file.getName()));
+				imagem.setImagem(CarregandoImagens(caminho + file.getName()));
 				lista.add(imagem);
 			}
 		}
-
+		
 		return lista;		
 	}
 	
@@ -89,30 +87,6 @@ public class ConverterParaJPEG {
 			subescreve.dispose();
 		} catch (IOException erro) {
 			erro.printStackTrace();
-		}
-	}
-
-	public File Converter(byte[] imager) {
-		Iterator<ImageWriter> iterador = ImageIO.getImageWritersByFormatName("jpeg");
-		ImageWriter subescreve = iterador.next();
-		ImageWriteParam parametroimagem = subescreve.getDefaultWriteParam();
-		parametroimagem.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		parametroimagem.setCompressionQuality(1);
-
-		try {
-			BufferedImage imagem = ImageIO.read(new ByteArrayInputStream(imager));
-			IIOImage imagestream = new IIOImage(imagem, null, null);
-
-			File file = File.createTempFile("imagem", "jpeg");
-			FileImageOutputStream output = new FileImageOutputStream(file);
-			subescreve.setOutput(output);
-
-			subescreve.write(null, imagestream, parametroimagem);
-			subescreve.dispose();
-			return file;
-		} catch (IOException erro) {
-			erro.printStackTrace();
-			return null;
 		}
 	}
 	

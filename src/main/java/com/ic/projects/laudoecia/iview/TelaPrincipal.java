@@ -61,7 +61,6 @@ public interface TelaPrincipal extends Tela
     public static final int REL_PROF_EXEC = 39;
     public static final int REL_CONVENIOS = 310;
     public static final int REL_PACIENTES = 311;
-    public static final int REL_PACIENTE_ANALITICO = 312;
 
     // Menu Base de Dados começam com 4
     public static final int BASE_DE_DADOS_CBHPM = 40;
@@ -80,8 +79,6 @@ public interface TelaPrincipal extends Tela
     public static final int PRIMEIRO_ACESSO = 55;
     public static final int SUPORTE_REMOTO = 56;
     public static final int PARAMETROS_EMAIL = 57;
-    public static final int CONSENTIMENTO = 58;
-    public static final int POLITICAS_PRIVACIDADE = 59;
 
     // custom
     public static final int DLG_CID10 = 60;

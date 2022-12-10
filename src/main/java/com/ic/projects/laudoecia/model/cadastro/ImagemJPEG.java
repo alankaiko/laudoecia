@@ -1,5 +1,6 @@
 package com.ic.projects.laudoecia.model.cadastro;
 
+//Jonathan Alves - classe inteira
 public class ImagemJPEG {
 	private String nomeDaImagem;
 	private byte[] imagem;

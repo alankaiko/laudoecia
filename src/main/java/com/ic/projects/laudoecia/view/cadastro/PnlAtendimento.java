@@ -201,8 +201,8 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 		pnlBtns.add(new CampoDaEnt(false, true, true).setComponent(btnDelProc, false, false, true, true), c3);
 		c3.weightx = 1;
 		c3.gridx = 3;
-//		pnlBtns.add(new CampoDaEnt(false, true, true).setComponent(btnEmailProc, true, true, false, true), c3);
-//		c3.gridx = 3;
+		pnlBtns.add(new CampoDaEnt(false, true, true).setComponent(btnEmailProc, true, true, false, true), c3);
+		c3.gridx = 3;
 		pnlBtns.add(Box.createHorizontalStrut(0), c3);
 		c3.weightx = 0;
 		c3.gridx = 4;
@@ -538,7 +538,7 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 	private MyJButton btnAddProc = new MyJButton("Adicionar");
 	private MyJButton btnEditProc = new MyJButton("Alterar");
 	private MyJButton btnDelProc = new MyJButton("Remover");
-	//private MyJButton btnEmailProc = new MyJButton("E-mail");
+	private MyJButton btnEmailProc = new MyJButton("E-mail");
 	private MyJButton btnAtestado = new MyJButton("Atestado");
 	private MyJButton btnLaudo = new MyJButton("Laudo/Foto");
 	private MyJButton btnCaptura = new MyJButton("Captura");
@@ -785,24 +785,24 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 
 		});
 
-//		btnEmailProc.setIcon(ImageResources.getIcon(ImagensLC.ENVIOEMAIL));
-//		btnEmailProc.setToolTipText("Enviar para E-mail");
-//		btnEmailProc.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				try {
-//					if(procSel().getLaudo() != null){
-//					DlgEmail dialogo = DlgEmail.getInstance(ultimoAtdMostrado, procSel());
-//					}else{
-//						JOptionPane.showMessageDialog(null, "Laudo não foi criado");
-//					}
-//				} catch (Exception aff) {
-//					aff.printStackTrace();
-//				}
-//
-//			}
-//
-//		});
+		btnEmailProc.setIcon(ImageResources.getIcon(ImagensLC.ENVIOEMAIL));
+		btnEmailProc.setToolTipText("Enviar para E-mail");
+		btnEmailProc.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(procSel().getLaudo() != null){
+					DlgEmail dialogo = DlgEmail.getInstance(ultimoAtdMostrado, procSel());
+					}else{
+						JOptionPane.showMessageDialog(null, "Laudo não foi criado");
+					}
+				} catch (Exception aff) {
+					aff.printStackTrace();
+				}
+				
+			}
+
+		});
 
 		btnAtestado.setIcon(ImageResources.getIcon(ImagensLC.ATESTADO));
 		btnAtestado.setToolTipText("Imprimir atestado.");

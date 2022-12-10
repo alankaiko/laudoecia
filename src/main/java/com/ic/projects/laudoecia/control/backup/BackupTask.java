@@ -175,6 +175,7 @@ class BackupTask extends TimerTask {
 				executarBackupDeDados();
 				if (backup.getTipo() == TIPO_BACKUP.DADOS_E_IMAGENS) {
 					executarBackupDeImagens();
+					//Jonathan Alves
 					this.executarBackupDaPastaDeImagens();
 				}
 				notificarFimDoBackup();
@@ -267,7 +268,8 @@ class BackupTask extends TimerTask {
 			}
 		}
 	}
-
+	
+	//Jonathan Alves
 	private void executarBackupDaPastaDeImagens() throws IOException {
 		try {
 			File source = new File(DiretorioDoSistemaUtil.PegaDiretorioDeImagens());

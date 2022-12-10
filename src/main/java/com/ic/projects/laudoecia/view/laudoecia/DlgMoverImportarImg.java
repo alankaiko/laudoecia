@@ -20,7 +20,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -29,13 +28,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -45,7 +43,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 
-import com.ic.projects.laudoecia.view.utils.DecriptarArquivo;
 import org.apache.commons.io.FileUtils;
 
 import com.ic.projects.laudoecia.control.autocompletar.BuscadorDeAtendimento;
@@ -348,7 +345,8 @@ public class DlgMoverImportarImg extends MyJDialog {
 		} catch (Exception a) {
 			a.printStackTrace();
 		}
-
+	
+		
 		JFileChooser jfc = new JFileChooser();
 		jfc.setMultiSelectionEnabled(true);
 		jfc.setSelectedFile(new File(imagens.get(0).getNomeDaImagem()));
@@ -358,38 +356,18 @@ public class DlgMoverImportarImg extends MyJDialog {
 			if (resultado == JFileChooser.APPROVE_OPTION) {
 				for(ImagemJPEG imagem : imagens) {
 					String caminhofinal = jfc.getSelectedFile().getAbsolutePath();
-					String[] nomeImagem = imagem.getNomeDaImagem().split("\\.");
-					String crianomeimagem =  "atd_" + mediador.getProcSelecionado().getAtendimento().getCodigo() + nomeImagem[0] + ".jpg";
+					String crianomeimagem =  "atd_" + mediador.getProcSelecionado().getAtendimento().getCodigo() + imagem.getNomeDaImagem();
 					caminhofinal = caminhofinal.replace(imagens.get(0).getNomeDaImagem(), crianomeimagem);
-					DecriptarArquivo decriptarArquivo = new DecriptarArquivo();
-					byte[] arquivoFinal = decriptarArquivo.DevolverArquivo(caminho + imagem.getNomeDaImagem());
-
-					this.Converter(caminhofinal, arquivoFinal);
+					
+					File arquivo = new File(caminho + imagem.getNomeDaImagem());
+					File arquivofinal = new File(caminhofinal);
+					FileUtils.copyFile(arquivo, arquivofinal);
+					
+					arquivo = null;
+					arquivofinal = null;						
 				}					
 			}
 		} catch (Exception erro) {
-			erro.printStackTrace();
-		}
-	}
-
-	public void Converter(String caminho, byte[] imager) {
-		Iterator<ImageWriter> iterador = ImageIO.getImageWritersByFormatName("jpeg");
-		ImageWriter subescreve = iterador.next();
-		ImageWriteParam parametroimagem = subescreve.getDefaultWriteParam();
-		parametroimagem.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		parametroimagem.setCompressionQuality(1);
-
-		try {
-			BufferedImage imagem = ImageIO.read(new ByteArrayInputStream(imager));
-			IIOImage imagestream = new IIOImage(imagem, null, null);
-
-			File file = new File(caminho);
-			FileImageOutputStream output = new FileImageOutputStream(file);
-			subescreve.setOutput(output);
-
-			subescreve.write(null, imagestream, parametroimagem);
-			subescreve.dispose();
-		} catch (IOException erro) {
 			erro.printStackTrace();
 		}
 	}
