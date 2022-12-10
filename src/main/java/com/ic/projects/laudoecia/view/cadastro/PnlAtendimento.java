@@ -368,7 +368,7 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 
 	@Override
 	protected boolean mostrarDadosDaEntidadeOk(Atendimento entidade, int contador) {
-		ultimoAtdMostrado = entidade;
+		//ultimoAtdMostrado = entidade;
 		switch (contador) {
 		case 0:
 			txtCodigo.setText(entidade.getCodigo());

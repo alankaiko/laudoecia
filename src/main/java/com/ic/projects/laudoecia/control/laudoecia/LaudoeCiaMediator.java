@@ -107,6 +107,7 @@ public class LaudoeCiaMediator {
 
 	private Atendimento atdSelecionado;
 	private ProcDoAtd procSelecionado;
+	private ProcDoAtd procTemp;
 	private Laudo laudoAtual = null;
 	private Map<ProcDoAtd, CacheMdls> laudosDoAtd = new HashMap<>();
 	private Map<Laudo, DadosOriginaisDoLaudo> dadosOriginais = new IdentityHashMap<>();
@@ -265,7 +266,7 @@ public class LaudoeCiaMediator {
 				procMudou(null);
 			} else {
 				view.setProcedimentos(atdSelecionado.getProcedimentos());
-				view.setProcSel(atdSelecionado.getProcedimentos().get(indexProcSel));
+				view.setProcSel(atdSelecionado.getProcedimentos().get(atdSelecionado.getProcedimentos().indexOf(this.procTemp)));
 				if (mostrarInfoAtd) {
 					// deve vir por ultimo pois mostrar dados acontece de
 					// forma modal travando a gui
@@ -743,11 +744,10 @@ public class LaudoeCiaMediator {
 		if (atd == null || proc == null) {
 			view.setAtendimento(atd);
 		} else {
-			indexProcSel = atd.getProcedimentos().indexOf(proc);
+			this.procTemp = proc;
 			mostrarInfoAtd = false;
 			view.setAtendimento(atd);
 			mostrarInfoAtd = true;
-			indexProcSel = 0;
 		}
 	}
 
