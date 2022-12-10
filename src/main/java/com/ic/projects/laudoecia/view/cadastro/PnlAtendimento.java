@@ -124,6 +124,7 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 	private C_EntidadeAtendimento controlador;
 	private JanelaComTitulo janela;
 	private boolean mostrandoDadosDoPaciente = false;
+	private boolean mudouDeAtendimento;
 
 	public PnlAtendimento() {
 		setLayout(new GridBagLayout());
@@ -368,7 +369,11 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 
 	@Override
 	protected boolean mostrarDadosDaEntidadeOk(Atendimento entidade, int contador) {
-		//ultimoAtdMostrado = entidade;
+		if(this.ultimoAtdMostrado != null && this.ultimoAtdMostrado.getCodigo() == entidade.getCodigo())
+			this.mudouDeAtendimento = true;
+
+		ultimoAtdMostrado = entidade;
+
 		switch (contador) {
 		case 0:
 			txtCodigo.setText(entidade.getCodigo());
@@ -395,21 +400,22 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 			}
 			return false;
 		case 4:
-			final List<Object[]> linhasDaTabela = new ArrayList<>();
-			List<ProcDoAtd> procedimentos = entidade.getProcedimentos();
-			for (int i = 0; i < procedimentos.size(); i++) {
-				ProcDoAtd p = procedimentos.get(i);
-				linhasDaTabela
-						.add(new Object[] { p, p.getProfExecutante() == null ? 0 : p.getProfExecutante().getCodigo(),
-								p.getPrevEntregaLaudo(), p.getValorPaciente() });
-			}
 			scrpTabela.updateResultList(new ResultsGenerator() {
 				@Override
 				public List<Object[]> generateResults() {
+					List<Object[]> linhasDaTabela = new ArrayList<>();
+
+					for(ProcDoAtd proc : ultimoAtdMostrado.getProcedimentos()) {
+						linhasDaTabela
+								.add(new Object[] { proc, proc.getProfExecutante() == null ? 0 : proc.getProfExecutante().getCodigo(),
+										proc.getPrevEntregaLaudo(), proc.getValorPaciente() });
+					}
+
 					return linhasDaTabela;
 				}
 
 			});
+
 			return true;
 		default:
 			throw new AssertionError();
@@ -1134,15 +1140,15 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 
 		private void atualizarConvenio() {
 			Convenio conv = buscConv.getSelectedModel();
-			if (ultimoAtdMostrado == null || !txtConvenio.isEditable()) {
+			if (ultimoAtdMostrado == null || !txtConvenio.isEditable() || mudouDeAtendimento) {
 			} else if (conv == null) {
 			} else {
 				List<ProcDoAtd> procs = gerarListaProcs(scrpTabela.getResults(), null);
 				if (procs.isEmpty()) {
 				} else {
 					final List<Object[]> linhasDaTabela = new ArrayList<>();
-					for (int i = 0; i < procs.size(); i++) {
-						ProcDoAtd p = procs.get(i);
+
+					for(ProcDoAtd p : procs) {
 						ProcDaTabela pdt = p.getProcMedico().getProcDaTabela(conv);
 						if (pdt == null) {
 							return;
@@ -1154,6 +1160,7 @@ public class PnlAtendimento extends PnlDaEntidadeComCrud<Atendimento> {
 								new Object[] { p, p.getProfExecutante() == null ? 0 : p.getProfExecutante().getCodigo(),
 										p.getPrevEntregaLaudo(), p.getValorPaciente() });
 					}
+
 					scrpTabela.updateResultList(new ResultsGenerator() {
 						@Override
 						public List<Object[]> generateResults() {
