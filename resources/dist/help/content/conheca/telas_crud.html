@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>2.3. As telas de cadastros</title>
+        <link rel="StyleSheet" href="../../structure/css/pages.css" type="text/css" />
+        <script type="text/javascript" src="../../structure/js/utils.js"></script>
+    </head>
+
+    <body style="margin:0; font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size:13px;">
+        <div style="background:#EEE; color:#06C; font-weight:bold; padding:15px; border-bottom:1px solid #666;">
+            <span class="title">2.3. As telas de cadastros</span>
+            <a class="noprint"  href="javascript:print();" title="Imprimir"><img src="../../structure/img/print_icon.gif" style="float:right;" border="0" /></a>
+        </div>
+        <div style="padding:15px;">
+            <p><b>Conhecendo a tela de cadastros</b></p>
+            <p align="justify">
+                As telas de cadastro possuem em três partes básicas:
+            </p>
+            <img src="../imagens/tela_crud_exemplo.jpg" />
+            <p><b>1. Barra de controle de navegação e registro</b></p>
+            <p align="justify">
+                São as opções da barra de ações que controlam todo o funcionamento da tela de cadastro.<br />
+                Os botões <strong>Primeiro</strong>, <strong>Anterior</strong>, <strong>Próximo</strong>, <strong>Último</strong> navegam entre os registros listados na tabela.<br />
+                O botão <strong>Adicionar</strong> abre e habilita o formulário para a inserção de um novo registro no banco de dados.<br />
+                O botão <strong>Alterar</strong> abre e habilita o formulário para a alteração do registro selecionado no banco de dados.<br />
+                O botão <strong>Salvar</strong> registra as informações do formulário no banco de dados.<br />
+                O botão <strong>Apagar</strong> exclui do banco de dados o registro selecionado.<br />
+                Para cancelar a inserção ou a alteração de um registro, utilize o botão <strong>Cancelar</strong>.
+            </p>
+            Outros botões:
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td width="50"><img src="../imagens/btn_visualizar.jpg" height="30" /></td>
+                    <td>Mostra as informações do registro selecionado no formulário.</td>
+                </tr>
+                <tr>
+                    <td><img src="../imagens/btn_procurar.jpg" height="30" /></td>
+                    <td>Abre a tabela de buscas de registros para fazer a procura de um registro.</td>
+                </tr>
+                <tr>
+                    <td><img src="../imagens/btn_imprimir.jpg" height="30" /></td>
+                    <td>Faz a impressão de um documento do registro.</td>
+                </tr>
+                <tr>
+                    <td><img src="../imagens/btn_usar.jpg" height="30" /></td>
+                    <td>Retorna o registro selecionado para a utilização em um outro formulário.</td>
+                </tr>
+            </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td valign="top" align="justify">
+                        <p><b>2. Tabela de buscas de registros</b></p>
+                        <p align="justify">
+                            Neste painel, é possível buscar por registros através dos filtros presentes na parte superior.<br />
+                            Na parte inferior, são listados os registros encontrados de acordo com os filtros realizados.
+                        </p>
+                    </td>
+                    <td width="10">&nbsp;</td>
+                    <td width="350">
+                        <script type="text/javascript">
+                            var obs = 'É possível ordenar os resultados clicando sobre o título da coluna. Quando a seta indicadora estiver apontando para cima [<img src="../imagens/seta_cima.png" />], é ordenado do menor para o maior. Caso contrário [<img src="../imagens/seta_baixo.png" />], é ordenado do maior para o menor.';
+                            titlePane('Nota', obs);
+                        </script>
+                    </td>
+                </tr>
+            </table>
+
+            <p><b>3. Formulário de registro</b></p>
+            <p align="justify">
+                Neste painel, é mostrado o formulário com as informações do registro. Por padrão o formulário fica desabilitado. Só é habilitado quando está em modo de adição ou edição.
+            </p>
+
+        </div>
+    </body>
+</html>

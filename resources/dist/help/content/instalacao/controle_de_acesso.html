@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>1.3. Definindo controle de acesso</title>
+        <link rel="StyleSheet" href="../../structure/css/pages.css" type="text/css" />
+        <script type="text/javascript" src="../../structure/js/utils.js"></script>
+    </head>
+
+    <body style="margin:0; font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size:13px;">
+        <div style="background:#EEE; color:#06C; font-weight:bold; padding:15px; border-bottom:1px solid #666;">
+            <span class="title">1.4. Definindo controle de acesso</span>
+            <a class="noprint" href="javascript:print();" title="Imprimir"><img src="../../structure/img/print_icon.gif" style="float:right;" border="0" /></a>
+        </div>
+        <div style="padding:15px;">
+            <p><b>Como definir o tipo de controle de acesso</b></p>
+            <p align="justify">
+                Esta configuração é acessada pelo menu <strong>Ferramentas</strong> &raquo; <strong>Parâmetros do Sistema</strong> &raquo; aba <strong>Outras Opções</strong>.
+            </p>
+            <p align="justify">
+                Para iniciar a configuração, clique no botão <img src="../imagens/btn_alterar.jpg" width="36" height="24" align="absmiddle" /> e selecione no campo <strong>Tipo de Controle de Acesso</strong> qual a opção desejada.<br />
+                Verifique a seguir qual é a melhor opção para sua instituição:
+            </p>
+            <ul>
+                <li>
+                    <p><b>Sem Controle:</b></p>
+                    <p align="justify">
+                        Neste tipo, não há controle de acesso nas rotinas e operações do sistema.
+                        Indicado para locais onde não há necessidade de ter auditoria de ações.<br />
+                        Ao abrir o sistema não será exigido dados de acesso do usuário. Qualquer pessoa que fizer a execução do sistema terá total controle (adicionar, alterar, apagar e consultar) sobre as rotinas e operações.
+                    </p>
+                </li>
+                <li>
+                    <p><b>Conforme Usuário Logado:</b></p>
+                    <p align="justify">
+                        Neste tipo, o controle de acesso é feito de acordo com a configuração de cada usuário.<br />
+                        Indicado para locais onde o sistema é acessado por vários usuários.<br />
+                    </p>
+                </li>
+                <li>
+                    <p><b>Sempre Exige Senha:</b></p>
+                    <p align="justify">
+                        Neste tipo de controle de acesso, o controle é feito de acordo com a configuração de cada usuário. A diferença do tipo Conforme Usuário Logado é que em toda ação do usuário será exigida a senha.<br />
+                        Indicado para locais onde a mesma estação de trabalho é utilizada por mais de um usuário ao mesmo tempo.<br />
+                    </p>
+                </li>
+            </ul>
+            <p align="justify">
+                Após selecionar a opção desejada, clique no botão <img src="../imagens/btn_salvar.jpg" width="36" height="24" align="absmiddle" />.
+                Para que a alteração tenha efeito, é necessário <strong>reiniciar o sistema</strong>.
+            </p>
+
+            <script type="text/javascript">
+                var obs = 'Para as opções <strong>Conforme Usuário Logado</strong> e <strong>Sempre Exige Senha</strong> são habilitados os cadastros de <a href="../../structure/menu.html?id=25" target="menu">Usuários</a>, <a href="../../structure/menu.html?id=24" target="menu">Grupo de Usuários</a> e <a href="../../structure/menu.html?id=45" target="menu">Auditoria de Ações</a>. Ao abrir o sistema será exigido os dados de acesso do usuário (login e senha). ' +
+                    'O controle de ações do usuário (adicionar, alterar, apagar e consultar) sobre as rotinas e operações do sistema é definido pelo grupo de usuário em que o mesmo está configurado.<br />' +
+                    'Para o primeiro acesso utilizar o usuário <b>ADM</b> sem senha. Para garantir maior segurança, é importante que, após definir os grupos de usuários e usuários do sistema, você altere o nome e senha deste usuário.';
+                titlePane('Observações:', obs);
+            </script>
+
+        </div>
+    </body>
+</html>

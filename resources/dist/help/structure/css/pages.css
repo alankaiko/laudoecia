@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+
+a:link {
+    color: #06C;
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #06C;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #09C;
+}
+
+a:active {
+    text-decoration: none;
+    color: #06C;
+}
+
+.title {
+    color: #06C;
+    font-size: 22px;
+}
+
+cite {
+    color: #06C;
+    border-bottom: 1px dotted #06C;
+}
+
+cite:hover {
+    color: #09C;
+}
+
+td.odd {
+    border:1px solid #999;
+    background:#EEEEEE;
+    font-weight:bold;
+    text-align:center;
+}
+
+td.idd {
+    border:1px solid #999;
+    background:#F5F5F5;
+}
+
+@media print {
+    .noprint { display: none; }
+}

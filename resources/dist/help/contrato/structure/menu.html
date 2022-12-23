@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Ajuda do Sistema</title>
+        <link rel="StyleSheet" href="css/dtree.css" type="text/css" />
+        <link rel="StyleSheet" href="css/pages.css" type="text/css" />
+        <script type="text/javascript" src="js/dtree.js"></script>
+        <script type="text/javascript" src="../content/content_menu.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript">
+            function sendForm()
+            {
+                var busca = document.getElementById('busca').value.replace(/\s{2,}/g, ' ');
+                if (busca != '' && busca != ' '){
+                    var url = 'search.html?busca=' + escape(busca);
+                    location.href = url;
+                }else {
+                    document.getElementById("erro").style.display = "block";
+                };
+            }
+
+            function openMenu(id)
+            {
+                parent.frames['menu'].document.getElementById('sd'+id).click();
+            }
+        </script>
+    </head>
+    <body style="margin:0; font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size:12px;">
+
+        <div style="background:#EEE; color:#06C; font-weight:bold; line-height:22px; padding:5px; border-bottom:1px solid #666;">
+            Pesquisar por tópico<br />
+            <table width="100%%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="210"><input id="busca" type="text" onkeyup="if(event.keyCode == 13){ sendForm(); }" style="width:200px;" /></td>
+                    <td><input type="image" value="submit" onclick="sendForm();" src="img/search_icon.png" title="Pesquisar"></td>
+                </tr>
+            </table>
+            <span id="erro" style="color: #900; display:none;">Por favor, insira um texto válido para pesquisa!</span>
+        </div>
+
+        <div id="dtree" class="dtree" style="padding-left:5px;">
+            <div style="padding:5px;" align="right"><a href="javascript: d.openAll();">abrir todos</a> | <a href="javascript: d.closeAll();">fechar todos</a></div>
+
+            <script type="text/javascript">
+                var abrirMenu = getUrlVars(); //pega variaveis passadas por get
+                var idMenuToOpen = -1;
+                var idMenuPaiToOpen = -1;
+                if (abrirMenu.length != 0) //se solicitou abrir um menu guarda o id para abrir
+                {
+                    idMenuToOpen = parseInt(abrirMenu['id']);
+                }
+
+                var d = new dTree('d');  //cria objeto arvore
+
+                var contentFolder = '../content/'; //pasta de conteúdo do help
+                var frameToOpen = 'content'; // frame padrao para abrir paginas
+
+                for (i = 0; i < menu.length; i++) { //percorre vetor de menus e insere na arvore
+                    var itemMenu = menu[i];
+                    if (itemMenu[0] == idMenuToOpen) //se o current menu for igual ao menu que solicitou abrir garda id do pai
+                    {
+                        idMenuPaiToOpen = itemMenu[1];
+                    }
+                    d.add(itemMenu[0], itemMenu[1], itemMenu[2], contentFolder + itemMenu[3], itemMenu[4], frameToOpen, itemMenu[5], itemMenu[6], itemMenu[7]);
+                }
+
+                document.write(d); //escreve arvore na tela
+
+                if (idMenuToOpen >= 0) //se tem menu solicitado a abrir
+                {
+                    openMenu(idMenuToOpen); //abre menu
+                    var elem = document.getElementById('dd'+idMenuPaiToOpen);
+                    if (elem.style.display == 'none'){ //se arvore do menu nao está aberto
+                        d.o(idMenuPaiToOpen); //abre arvore pai
+                    }
+                }
+
+            </script>
+
+            <br /><br /><br />
+        </div>
+    </body>
+</html>

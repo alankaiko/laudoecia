@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.1
+Created-By: 1.7.0_55-b13 (Oracle Corporation)
+Class-Path: lib/balloontip-1.2.1.jar lib/bcprov-ext-jdk15on-152.jar li
+ b/bcprov-jdk15on-152.jar lib/CompanyLibrary.jar lib/eclipselink.jar l
+ ib/javax.persistence_2.0.3.v201010191057.jar lib/Filters.jar lib/huns
+ pell.jar lib/customizer.jar lib/jmf.jar lib/mediaplayer.jar lib/multi
+ player.jar lib/sound.jar lib/jna.jar lib/joda-time-1.6.2.jar lib/comm
+ ons-beanutils-1.8.2.jar lib/commons-collections-3.2.1.jar lib/commons
+ -digester-1.7.jar lib/commons-logging-1.1.jar lib/jasperreports-4.5.0
+ .jar lib/jcommon-1.0.15.jar lib/jfreechart-1.0.12.jar lib/pdf-rendere
+ r-1.0.5.jar lib/postgresql-8.3-603.jdbc3.jar lib/iText-2.1.7.jar lib/javax.persistence-2.0.5.jar lib/org.eclipse.persistence.antlr-2.4.2.jar lib/org.eclipse.persistence.asm-2.4.2.jar lib/org.eclipse.persistence.core-2.4.2.jar lib/org.eclipse.persistence.jpa-2.4.2.jar lib/org.eclipse.persistence.jpa.jpql-2.4.2.jar lib/Autocompleter.jar lib/selenium-server-standalone-3.141.59.jar lib/commons-io-2.6.jar lib/zip4j-2.6.4.jar lib/mail-1.4.7.jar
+SplashScreen-Image: images/INITIALIZE-SYSTEM.png
+X-COMMENT: Main-Class will be added automatically by build
+Main-Class: com.ic.projects.laudoecia.view.build.Build
+

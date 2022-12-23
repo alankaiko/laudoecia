@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Language" content="pt-br" />
+        <link rel="StyleSheet" href="css/dtree.css" type="text/css" />
+        <link rel="StyleSheet" href="css/pages.css" type="text/css" />
+        <script type="text/javascript" src="js/dtree.js"></script>
+        <script type="text/javascript" src="../content/content_menu.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript">
+            function includeItem(keywords, itemText, itemKeys)
+            {
+                var achou = false;
+                var itemTextSemAcento = retira_acentos(retira_caracteres_especiais(itemText)).toLowerCase();
+                itemText = retira_caracteres_especiais(itemText);
+                for(var i = 0; i < keywords.length; i++)
+                {
+                    if (itemTextSemAcento.indexOf(keywords[i]) != -1)
+                    {
+                        var indexKey = itemTextSemAcento.indexOf(keywords[i]);
+                        var endIndexKey = indexKey + keywords[i].length;
+                        itemText = itemText.substring(0, indexKey) + '<b>' + itemText.substring(indexKey, endIndexKey) + '</b>' + itemText.substring(endIndexKey, itemText.length);
+                        itemTextSemAcento = itemTextSemAcento.substring(0, indexKey) + '<b>' + itemTextSemAcento.substring(indexKey, endIndexKey) + '</b>' + itemTextSemAcento.substring(endIndexKey, itemTextSemAcento.length);
+                        achou = true;
+                    }
+                    if (retira_acentos(retira_caracteres_especiais(itemKeys)).toLowerCase().indexOf(keywords[i]) != -1)
+                    {
+                        achou = true;
+                    }
+                }
+                return achou ? itemText : null;
+            }
+        </script>
+
+        <title>Pesquisando</title>
+    </head>
+
+    <body style="margin:0; font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size:12px;">
+
+        <div style="background:#EEE; color:#06C; font-weight:bold; margin-bottom:10px; padding:5px; border-bottom:1px solid #666;">
+            <input type="image" value="submit" onclick="location.href='menu.html'" src="img/back_icon.png" align="absmiddle" title="Voltar ao menu">
+                Pesquisando por <span style="font-size:14px"><script type="text/javascript"> document.write(getUrlVars()["busca"]); </script></span>
+
+        </div>
+
+        <div id="dtree" class="dtree" style="padding-left:5px;">
+
+            <script type="text/javascript">
+                //pega texto da busca, retira acentos, coloca tudo em minusculo e separa as palavras em um array
+                var buscarPor = retira_conjuncoes(retira_acentos(retira_caracteres_especiais(getUrlVars()["busca"])).toLowerCase().split(' '));
+
+                var d = new dTree('d');
+
+                var contentFolder = '../content/'; //pasta de conteúdo do help
+                var frameToOpen = 'content'; // frame padrao para abrir paginas
+
+                d.add(0, -1, 'Resultados da Busca');
+
+                //procura no menu as palavras buscadas e inlui itens da busca se a palavra contem no titulo do menu.
+                var count = 0;
+                for (var i = 0; i < menu.length; i++) {
+                    var itemMenu = menu[i];
+                    var descItem = includeItem(buscarPor, itemMenu[2], itemMenu[8]);
+
+                    if (descItem != null){
+                        d.add(i + 1, 0, descItem, contentFolder + itemMenu[3], itemMenu[4], frameToOpen, itemMenu[5], itemMenu[6], itemMenu[7]);
+                        count++;
+                    }
+                    descItem = null;
+                }
+
+                if (count == 0)
+                {
+                    d.add(1, 0, "Nenhum resultado encontrado.");
+                }
+
+                document.write(d);
+
+            </script>
+
+        </div>
+
+
+    </body>
+</html>

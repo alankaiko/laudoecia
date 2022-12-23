@@ -1,0 +1,1 @@
+start "" "C:\Program Files\Java\jre7\bin\javaw.exe" -Xmx512M -jar laudoecia.jar  
