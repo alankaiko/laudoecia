@@ -21,7 +21,6 @@ import javax.imageio.stream.FileImageOutputStream;
 import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 
-//Jonathan Alves
 public class ConverterParaJPEG {
 
 	public List<ImagemJPEG> listaDeImagensCapturadas(Integer codigoProcedimento, Integer idAtendimento){

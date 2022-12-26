@@ -116,9 +116,8 @@ public class LaudoeCiaMediator {
 	private NavegadorImagens navegador = new NavegadorImagens();
 	private C_EspacoEmDisco c_EspacoEmDisco;
 	private C_ListaDeVideos c_Videos;
-	
-	//Jonathan Alves
-	private List<ImagemJPEG> lista = new ArrayList<ImagemJPEG>();
+
+	private List<ImagemJPEG> lista = new ArrayList<>();
 	
 	private String viewState;
 	private String telaQueChamouImgFS;
@@ -218,7 +217,6 @@ public class LaudoeCiaMediator {
 		return navegador.getImagemAtual();
 	}
 
-	//Jonathan Alves - alteracoes no metodo
 	private ImagemJPEG getImagemSel() {
 		int indexAtual;
 		if (estaEscolhendoImgAutom) {
@@ -323,10 +321,8 @@ public class LaudoeCiaMediator {
 				}
 				procMedico = novoProcSel.getProcMedico();
 				//imgBytesList = converterListaDeImgs(novoProcSel.getImagens());
-				//Jonathan Alves
 				this.AtualizarLista();
-				
-				//Jonathan Alves - classe inteira
+
 				for(ImagemJPEG jpeg : this.lista)
 					imgBytesList.add(jpeg.getImagem());		
 				
@@ -354,7 +350,6 @@ public class LaudoeCiaMediator {
 		}
 	}
 
-	//Jonathan Alves - alteracoes neste metodo
 	public void imagemFoiEditada(byte[] img) {
 		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
 		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());
@@ -371,7 +366,6 @@ public class LaudoeCiaMediator {
 	}
 
 	public void imagemFoiCriada(byte[] img, boolean playAudio) {
-		//Jonathan Alves
 		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
 		
 		if (atdSelecionado == null) {
@@ -425,8 +419,7 @@ public class LaudoeCiaMediator {
 			view.removerImgSelecionada();
 			navegador.removerImgSelecionada();
 			view.atualizarSelecao();
-			
-			//Jonathan Alves
+
 			ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
 			if(referencia.ExcluirImagem(this.lista.get(posicao))) {
 				this.lista.remove(posicao);
@@ -481,7 +474,7 @@ public class LaudoeCiaMediator {
 			// pode não ser lida corretamente no codigo addImagem
 			novoProcDestino.getImagens().size();
 			for (ImagemJPEG imagem : imagens) {
-				ServiceJPEG referencia = new ServiceJPEG(this.atdSelecionado, novoProcDestino);
+				ServiceJPEG referencia = new ServiceJPEG(novoProcDestino.getAtendimento(), novoProcDestino);
 				referencia.CriaImagemNaPasta(imagem.getImagem());
 				
 				referencia = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
@@ -514,9 +507,11 @@ public class LaudoeCiaMediator {
 	}
 	
 	public void Remanejar(ProcDoAtd procdestino) {
-		ProcDoAtd procedimento = getProcSelecionado();
+		ProcDoAtd procedimento = this.getProcSelecionado();
 		this.procMudou(procdestino);
 		this.procMudou(procedimento);
+
+		this.AtualizarLista();
 	}
 
 	public boolean importarImagens(List<ImagemJPEG> imagens) {
@@ -843,6 +838,9 @@ public class LaudoeCiaMediator {
 			return null;
 		} else {
 			CacheMdls laudos = laudosDoAtd.get(procDoAtd);
+			if(laudos == null)
+				return null;
+
 			Iterator<Entry<ModeloDeLaudoDoProc, Laudo>> it = laudos.entrySet().iterator();
 			ModeloDeLaudoDoProc mdl = null;
 			while (it.hasNext()) {
@@ -1544,7 +1542,6 @@ public class LaudoeCiaMediator {
 				PaginaDeImagens pagina = paginas.get(indexDaPag);
 				List<ImagemImpressa> imagens = pagina.getImagens();
 				//Imagem imgSel = getImagemSel();
-				//Jonathan Alves
 				ImagemJPEG imgSel = getImagemSel();
 				
 				if (imgSel != null && indexImagem >= 0) {
@@ -2054,10 +2051,8 @@ public class LaudoeCiaMediator {
 			getDaoImagem().cadastrarImagem(img, proc);
 			return null;
 		}
-
 	}
-	
-	//Jonatan - metodo de atualizacao da lista
+
 	public void AtualizarLista(){
 		ServiceJPEG captur = new ServiceJPEG(this.atdSelecionado, this.procSelecionado);
 		this.lista = captur.ListaImagensCapturadas(this.procSelecionado.getProcMedico().getCodigo(), this.procSelecionado.getAtendimento().getCodigo());

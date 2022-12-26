@@ -41,7 +41,6 @@ class DesenhistaDeTexto extends Desenhista {
 	
 	private FontSource fontSource = nullFontSource;
 	//private TxtArea txtArea = new TxtArea();
-	//Jonathan Alves
 	private JTextComponent txtArea = new JTextField();
 	private UtilsCompletaTexto util;
 	private int x;
@@ -49,7 +48,6 @@ class DesenhistaDeTexto extends Desenhista {
 
 	DesenhistaDeTexto(Painter decorator) {
 		super(decorator);
-		//Jonathan Alves
 		util = new UtilsCompletaTexto(this);
 		PropriedadesAreadeTexto();
 	}

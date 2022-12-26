@@ -181,13 +181,13 @@ public class DlgMoverImportarImg extends MyJDialog {
 					if (mediador.importarImagens(imagens)) {
 						StaticInfo.setDirImportacaoImagens(txtDirImagens.getText());
 						deletarImagensSelecionadas();
-						fechar();
+						dispose();
 					}
 				} else {
 					if (buscAtd.getLinhaSelecionada() == null) {
 						SwingUtils.mostrarMensagemDeErroConhecido(DlgMoverImportarImg.this,"Escolha um atendimento!");
 					} else if (mediador.moverImagens(imagens, getProc())) {
-						fechar();
+						dispose();
 					} else {
 					}
 				}
@@ -469,7 +469,7 @@ public class DlgMoverImportarImg extends MyJDialog {
 
 	@Override
 	public void fechar() {
-		dispose();
+		this.dispose();
 	}
 
 	private List<ImagemJPEG> obterImagensSelecionadass() {

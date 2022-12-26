@@ -9,7 +9,6 @@ import com.ic.projects.laudoecia.model.auditable.ProcDoAtd;
 import com.ic.projects.laudoecia.model.cadastro.ImagemJPEG;
 import com.ic.projects.laudoecia.view.utils.DiretorioDoSistemaUtil;
 
-//Jonathan Alves - classe inteira
 public class ServiceJPEG {
 	//private LaudoeCiaMediator mediator;
 	private Atendimento atendimento;
