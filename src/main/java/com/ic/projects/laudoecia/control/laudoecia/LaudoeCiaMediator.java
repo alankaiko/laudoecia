@@ -510,8 +510,6 @@ public class LaudoeCiaMediator {
 		ProcDoAtd procedimento = this.getProcSelecionado();
 		this.procMudou(procdestino);
 		this.procMudou(procedimento);
-
-		this.AtualizarLista();
 	}
 
 	public boolean importarImagens(List<ImagemJPEG> imagens) {
